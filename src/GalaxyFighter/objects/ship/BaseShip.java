@@ -26,12 +26,10 @@ public class BaseShip extends MotionObject {
     public BaseShip(Game game) {
         this.game = game;
 
-        debug = true;
-
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
         kb.onKeyDown.addListener(code -> {
-            switch (code){
+            switch (code) {
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_UP:
@@ -41,7 +39,7 @@ public class BaseShip extends MotionObject {
             }
         });
         kb.onKeyUp.addListener(code -> {
-            switch (code){
+            switch (code) {
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_UP:
@@ -52,19 +50,21 @@ public class BaseShip extends MotionObject {
                     shoot();
                     break;
                 case KeyEvent.VK_ENTER:
-                    currentSprite.setState(currentSprite.state+1);
+                    currentSprite.setState(currentSprite.state + 1);
                     break;
             }
         });
     }
 
     private List<Integer> keys = new ArrayList<>();
-    private void movementKeyDown(int key){
+
+    private void movementKeyDown(int key) {
         keys.add(key);
     }
-    private void movementKeyUp(int key){
+
+    private void movementKeyUp(int key) {
         int idx = keys.indexOf(key);
-        if (idx >= 0){
+        if (idx >= 0) {
             keys.remove(idx);
         }
     }
@@ -83,17 +83,21 @@ public class BaseShip extends MotionObject {
                 if (speed.y < -maxSpeed) {
                     speed.y = -maxSpeed;
                 } else {
-                    speed.y -= baseAcceleration;
+                    speed.y -= baseAcceleration * secondsElapsed;
                 }
             } else {
                 if (speed.y > maxSpeed) {
                     speed.y = maxSpeed;
                 } else {
-                    speed.y += baseAcceleration;
+                    speed.y += baseAcceleration * secondsElapsed;
                 }
             }
         } else {
-            speed.y = speed.y * brakeRatio;
+            if (Math.round(speed.y) == 0) {
+                speed.y = 0;
+            }else {
+                speed.y -= speed.y * (brakeRatio * secondsElapsed);
+            }
         }
 
         if (idxLeft >= 0 || idxRight >= 0) {
@@ -103,17 +107,21 @@ public class BaseShip extends MotionObject {
                 if (speed.x < -maxSpeed) {
                     speed.x = -maxSpeed;
                 } else {
-                    speed.x -= baseAcceleration;
+                    speed.x -= baseAcceleration * secondsElapsed;
                 }
             } else {
                 if (speed.x > maxSpeed) {
                     speed.x = maxSpeed;
                 } else {
-                    speed.x += baseAcceleration;
+                    speed.x += baseAcceleration * secondsElapsed;
                 }
             }
         } else {
-            speed.x = speed.x * brakeRatio;
+            if (Math.round(speed.x) == 0) {
+                speed.x = 0;
+            }else {
+                speed.x -= speed.x * brakeRatio * secondsElapsed;
+            }
         }
 
         super.update(secondsElapsed);

@@ -56,11 +56,14 @@ public abstract class Game extends MyFrame {
     }
 
 
-    private final int frameRate = 240;
+    private final int frameRate = 250;
     private BufferStrategy buffer;
     private Graphics2D g2d;
     private Graphics graphics;
     private BufferedImage bufferImage;
+    private double fps;
+    private boolean debug = true;
+    private int msPerFrame;
 
     private void setup() {
         canvas.createBufferStrategy( 2 );
@@ -77,10 +80,6 @@ public abstract class Game extends MyFrame {
 
         msPerFrame = 1000/frameRate;
     }
-
-    double fps;
-    boolean debug = true;
-    int msPerFrame;
 
     public void start() {
         setup();
@@ -126,9 +125,9 @@ public abstract class Game extends MyFrame {
     protected void update(long elapsedMs){
         List<GameObject> objectsToRemove = objectList.stream().filter(x->x.isDestroyed()).collect(Collectors.toList());
 
-        for(GameObject o : objectsToRemove) {
-            objectList.remove(o);
-        }
+        objectList.removeAll(objectsToRemove);
+        objectList.addAll(objectsToAdd);
+        objectsToAdd.clear();
 
         for(GameObject o : objectList){
             o.update(((double)elapsedMs) / 1000);
@@ -167,7 +166,9 @@ public abstract class Game extends MyFrame {
         }
     }
 
+
+    protected List<GameObject> objectsToAdd = new ArrayList<>();
     public void addObject(GameObject obj) {
-        objectList.add(obj);
+        objectsToAdd.add(obj);
     }
 }

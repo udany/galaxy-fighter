@@ -1,6 +1,6 @@
 package GalaxyFighter.objects.ship;
 
-import GalaxyFighter.objects.weapons.DoubleWeapon;
+import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Palette;
 import engine.graphics.Sprite;
 import engine.window.Game;
@@ -14,11 +14,11 @@ public class EdgeLiner extends BaseShip {
     public EdgeLiner(Game game) {
         super(game);
 
-        weapon = new DoubleWeapon();
+        weapon = new SingleWeapon();
 
-        baseAcceleration = 20.5;
-        maxSpeed = 300;
-        brakeRatio = 0.75;
+        baseAcceleration = 3000;
+        maxSpeed = 500;
+        brakeRatio = 5.6;
 
         size.set(16, 32);
 

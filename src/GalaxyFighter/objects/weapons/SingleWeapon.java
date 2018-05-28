@@ -5,7 +5,7 @@ import GalaxyFighter.objects.ship.BaseShip;
 import engine.base.Vector;
 import engine.window.Game;
 
-public class SimpleWeapon extends BaseWeapon {
+public class SingleWeapon extends BaseWeapon {
     public void fire(Game game, BaseShip ship) {
         SimpleBullet b = new SimpleBullet();
 

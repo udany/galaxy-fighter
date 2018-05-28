@@ -11,7 +11,13 @@ public class GalaxyFighter extends Game {
         super(640, 480);
         setTitle("Galaxy Fighter");
 
-        BaseShip ship = new EdgeLiner(this);
+        BaseShip ship;
+
+        ship = new Bombardier(this);
+        ship.setPosition(240, 480-48);
+        objectList.add(ship);
+
+        ship = new EdgeLiner(this);
         ship.setPosition(380, 480-48);
         objectList.add(ship);
 
