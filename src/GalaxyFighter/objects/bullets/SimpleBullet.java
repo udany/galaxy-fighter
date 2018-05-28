@@ -13,6 +13,9 @@ public class SimpleBullet extends BaseBullet {
 
         currentSprite = new Sprite(16, 16, "/images/Bullets.png");
         currentSprite.origin.set(5, 5);
-        currentSprite.setState(5);
+    }
+
+    public void setType(int type) {
+        currentSprite.setState(type);
     }
 }

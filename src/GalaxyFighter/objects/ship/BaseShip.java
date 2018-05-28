@@ -22,6 +22,8 @@ public class BaseShip extends MotionObject {
 
     Game game;
     BaseWeapon weapon;
+    boolean shouldFire;
+    double timeSinceLastShot = -1;
 
     public BaseShip(Game game) {
         this.game = game;
@@ -36,6 +38,10 @@ public class BaseShip extends MotionObject {
                 case KeyEvent.VK_DOWN:
                     movementKeyDown(code);
                     break;
+                case KeyEvent.VK_SPACE:
+                    shouldFire = true;
+                    timeSinceLastShot = -1;
+                    break;
             }
         });
         kb.onKeyUp.addListener(code -> {
@@ -47,7 +53,8 @@ public class BaseShip extends MotionObject {
                     movementKeyUp(code);
                     break;
                 case KeyEvent.VK_SPACE:
-                    shoot();
+                    shouldFire = false;
+                    timeSinceLastShot = -1;
                     break;
                 case KeyEvent.VK_ENTER:
                     currentSprite.setState(currentSprite.state + 1);
@@ -138,6 +145,17 @@ public class BaseShip extends MotionObject {
         }
         if (position.y + size.height >= game.size.height) {
             position.y = game.size.height - size.height;
+        }
+
+
+        // SHOOT
+        if (shouldFire) {
+            if (timeSinceLastShot < 0 || timeSinceLastShot >= weapon.cadence) {
+                shoot();
+                timeSinceLastShot = 0;
+            } else {
+                timeSinceLastShot += secondsElapsed;
+            }
         }
     }
 
