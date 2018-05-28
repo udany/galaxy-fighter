@@ -12,6 +12,7 @@ public abstract class GameObject implements IObject {
     protected Size size = new Size();
     protected Vector position = new Vector();
     protected Sprite currentSprite;
+    protected boolean debug = false;
 
     public int getWidth(){
         return size.width;
@@ -58,6 +59,13 @@ public abstract class GameObject implements IObject {
     public void draw (Graphics2D graphics){
         if (currentSprite != null){
             currentSprite.draw(graphics, position);
+        }
+
+        if (debug) {
+            graphics.setColor(new Color(255, 0,0, 58));
+            graphics.draw(getCollisionArea());
+
+            // graphics.drawString("Score: "+current, (float)p.x, (float)p.y);
         }
     }
 
