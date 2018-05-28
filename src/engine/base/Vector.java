@@ -33,6 +33,13 @@ public class Vector {
     }
 
 
+    public Vector subtract(double x, double y){
+        x -= x;
+        y -= y;
+
+        return this;
+    }
+
     public Vector subtract(Vector p){
         x -= p.x;
         y -= p.y;

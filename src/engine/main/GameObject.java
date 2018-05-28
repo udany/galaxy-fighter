@@ -61,7 +61,7 @@ public abstract class GameObject implements IObject {
         return this;
     }
 
-    public abstract void update();
+    public abstract void update(double secondsElapsed);
 
     public void draw (Graphics2D graphics){
         if (currentSprite != null){
