@@ -12,7 +12,7 @@ public class MyFrame extends JFrame {
     public Event<EventData> onFocus;
     public Event<EventData> onBlur;
 
-    protected MyFrame(){
+    public MyFrame(){
         setNimbusLookAndFeel();
 
         onClose = new Event<>();

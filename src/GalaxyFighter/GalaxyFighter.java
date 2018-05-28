@@ -11,15 +11,15 @@ public class GalaxyFighter extends Game {
         super(640, 480);
         setTitle("Galaxy Fighter");
 
-        panel.setBackground(Color.BLACK);
-
         BaseShip ship = new EdgeLiner(this);
         ship.setPosition(380, 480-48);
         objectList.add(ship);
+
+        start();
     }
 
     @Override
-    protected void update() {
-        super.update();
+    protected void update(long elapsedMs) {
+        super.update(elapsedMs);
     }
 }

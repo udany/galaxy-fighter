@@ -26,6 +26,8 @@ public class BaseShip extends MotionObject {
     public BaseShip(Game game) {
         this.game = game;
 
+        debug = true;
+
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
         kb.onKeyDown.addListener(code -> {
@@ -68,7 +70,7 @@ public class BaseShip extends MotionObject {
     }
 
     @Override
-    public void update() {
+    public void update(double secondsElapsed) {
         int idxUp = keys.indexOf(KeyEvent.VK_UP);
         int idxDown = keys.indexOf(KeyEvent.VK_DOWN);
         int idxLeft = keys.indexOf(KeyEvent.VK_LEFT);
@@ -114,7 +116,7 @@ public class BaseShip extends MotionObject {
             speed.x = speed.x * brakeRatio;
         }
 
-        super.update();
+        super.update(secondsElapsed);
 
         if (position.x <= 0) {
             position.x = 0;

@@ -16,8 +16,8 @@ public class Bombardier extends BaseShip {
 
         weapon = new SimpleWeapon();
 
-        baseAcceleration = .5;
-        maxSpeed = 3;
+        baseAcceleration = 12.5;
+        maxSpeed = 10;
         brakeRatio = 0.9;
 
         size.set(16, 32);
@@ -34,7 +34,7 @@ public class Bombardier extends BaseShip {
         currentSprite.applyPalette(paletteList.get(0));
 
         engineFire = new Sprite(16, 16, "/images/EngineFire.png");
-        engineFire.setFramesPerFrame(3);
+        engineFire.setFramesPerFrame(10);
     }
 
 

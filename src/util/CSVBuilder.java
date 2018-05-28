@@ -1,7 +1,5 @@
 package util;
 
-import pacman.objects.Dot;
-
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ public class CSVBuilder {
     public static <T> List<T> build(String file, Function<Data, T> fn){
         ArrayList<T> r = new ArrayList<>();
 
-        URL url = Dot.class.getResource(file);
+        URL url = CSVBuilder.class.getResource(file);
         List<List<String>> dataStr = CSVReader.read(url);
 
         /// NESTED LAMBDAS YAY! /n
