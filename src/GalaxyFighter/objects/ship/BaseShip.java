@@ -22,12 +22,15 @@ public class BaseShip extends MotionObject {
     public BaseShip(Game game) {
         this.game = game;
 
-        baseSpeed = 5.0;
-        brakeRatio = 0.4;
+        debug = true;
+
+        baseSpeed = 3.0;
+        brakeRatio = 0.7;
 
         size.set(16, 32);
 
         currentSprite = new Sprite(64, 48, "/images/Ship_Edgeliner.png");
+        currentSprite.origin.set(23,8);
 
         currentSprite.setBasePalette(new Palette("/images/Ship_Edgeliner.palette.0.png"));
 
@@ -96,7 +99,7 @@ public class BaseShip extends MotionObject {
                 speed.y = baseSpeed;
             }
         } else {
-            acceleration.y = -speed.y * brakeRatio;
+            speed.y = speed.y * brakeRatio;
         }
 
         if (idxLeft >= 0 || idxRight >= 0) {
@@ -108,7 +111,7 @@ public class BaseShip extends MotionObject {
                 speed.x = baseSpeed;
             }
         } else {
-            acceleration.x = -speed.x * brakeRatio;
+            speed.x = speed.x * brakeRatio;
         }
 
         super.update();
@@ -121,6 +124,6 @@ public class BaseShip extends MotionObject {
     public void draw(Graphics2D graphics) {
         super.draw(graphics);
 
-        engineFire.animate(true).draw(graphics, position.clone().add(24, 38));
+        engineFire.animate(true).draw(graphics, position.clone().add(0, 30));
     }
 }
