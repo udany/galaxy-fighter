@@ -1,5 +1,7 @@
 package GalaxyFighter;
 import GalaxyFighter.objects.ship.BaseShip;
+import GalaxyFighter.objects.ship.Bombardier;
+import GalaxyFighter.objects.ship.EdgeLiner;
 import engine.window.Game;
 
 import java.awt.*;
@@ -11,8 +13,13 @@ public class GalaxyFighter extends Game {
 
         panel.setBackground(Color.BLACK);
 
-        BaseShip ship = new BaseShip(this);
-        ship.setPosition(320, 480-48);
+        BaseShip ship = new Bombardier(this);
+        ship.setPosition(240, 480-48);
+        objectList.add(ship);
+
+
+        ship = new EdgeLiner(this);
+        ship.setPosition(380, 480-48);
         objectList.add(ship);
     }
 
