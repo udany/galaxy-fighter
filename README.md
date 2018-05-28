@@ -1,2 +1,3 @@
-# galaxy-fighter
-Simple shmup written in Java
+# Galaxy Fighter
+
+A simple SHMUP written in Java
