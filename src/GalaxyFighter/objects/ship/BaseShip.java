@@ -15,7 +15,8 @@ import java.util.List;
 public class BaseShip extends MotionObject {
 
     private Sprite engineFire;
-    private double baseSpeed;
+    private double baseAccel;
+    private double maxSpeed;
     private double brakeRatio;
     private Game game;
 
@@ -24,8 +25,9 @@ public class BaseShip extends MotionObject {
 
         debug = true;
 
-        baseSpeed = 3.0;
-        brakeRatio = 0.7;
+        baseAccel = .9;
+        maxSpeed = 5;
+        brakeRatio = 0.75;
 
         size.set(16, 32);
 
@@ -94,9 +96,17 @@ public class BaseShip extends MotionObject {
             acceleration.y = 0;
 
             if (Math.max(idxDown, idxUp) == idxUp) {
-                speed.y = -baseSpeed;
+                if (speed.y < -maxSpeed) {
+                    speed.y = -maxSpeed;
+                } else {
+                    speed.y -= baseAccel;
+                }
             } else {
-                speed.y = baseSpeed;
+                if (speed.y > maxSpeed) {
+                    speed.y = maxSpeed;
+                } else {
+                    speed.y += baseAccel;
+                }
             }
         } else {
             speed.y = speed.y * brakeRatio;
@@ -106,9 +116,17 @@ public class BaseShip extends MotionObject {
             acceleration.x = 0;
 
             if (Math.max(idxLeft, idxRight) == idxLeft) {
-                speed.x = -baseSpeed;
+                if (speed.x < -maxSpeed) {
+                    speed.x = -maxSpeed;
+                } else {
+                    speed.x -= baseAccel;
+                }
             } else {
-                speed.x = baseSpeed;
+                if (speed.x > maxSpeed) {
+                    speed.x = maxSpeed;
+                } else {
+                    speed.x += baseAccel;
+                }
             }
         } else {
             speed.x = speed.x * brakeRatio;
@@ -116,7 +134,19 @@ public class BaseShip extends MotionObject {
 
         super.update();
 
-        //if (this.)
+        if (position.x <= 0) {
+            position.x = 0;
+        }
+        if (position.x + size.width >= game.size.width) {
+            position.x = game.size.width - size.width;
+        }
+
+        if (position.y <= 0) {
+            position.y = 0;
+        }
+        if (position.y + size.height >= game.size.height) {
+            position.y = game.size.height - size.height;
+        }
     }
 
 
@@ -124,6 +154,6 @@ public class BaseShip extends MotionObject {
     public void draw(Graphics2D graphics) {
         super.draw(graphics);
 
-        engineFire.animate(true).draw(graphics, position.clone().add(0, 30));
+        engineFire.animate(true).draw(graphics, position.clone().add(1, 30));
     }
 }
