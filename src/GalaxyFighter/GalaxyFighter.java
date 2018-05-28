@@ -23,9 +23,4 @@ public class GalaxyFighter extends Game {
 
         start();
     }
-
-    @Override
-    protected void update(long elapsedMs) {
-        super.update(elapsedMs);
-    }
 }
