@@ -1,5 +1,6 @@
 package GalaxyFighter.objects.ship;
 
+import GalaxyFighter.objects.weapons.SimpleWeapon;
 import engine.graphics.Palette;
 import engine.graphics.Sprite;
 import engine.window.Game;
@@ -12,6 +13,8 @@ public class Bombardier extends BaseShip {
 
     public Bombardier(Game game) {
         super(game);
+
+        weapon = new SimpleWeapon();
 
         baseAcceleration = .5;
         maxSpeed = 3;

@@ -1,5 +1,6 @@
 package GalaxyFighter.objects.ship;
 
+import GalaxyFighter.objects.weapons.BaseWeapon;
 import engine.graphics.Palette;
 import engine.graphics.Sprite;
 import engine.input.Keyboard;
@@ -20,6 +21,7 @@ public class BaseShip extends MotionObject {
     double brakeRatio = 1;
 
     Game game;
+    BaseWeapon weapon;
 
     public BaseShip(Game game) {
         this.game = game;
@@ -44,13 +46,15 @@ public class BaseShip extends MotionObject {
                 case KeyEvent.VK_DOWN:
                     movementKeyUp(code);
                     break;
+                case KeyEvent.VK_SPACE:
+                    shoot();
+                    break;
                 case KeyEvent.VK_ENTER:
                     currentSprite.setState(currentSprite.state+1);
                     break;
             }
         });
     }
-
 
     private List<Integer> keys = new ArrayList<>();
     private void movementKeyDown(int key){
@@ -62,7 +66,6 @@ public class BaseShip extends MotionObject {
             keys.remove(idx);
         }
     }
-
 
     @Override
     public void update() {
@@ -125,6 +128,12 @@ public class BaseShip extends MotionObject {
         }
         if (position.y + size.height >= game.size.height) {
             position.y = game.size.height - size.height;
+        }
+    }
+
+    public void shoot() {
+        if (weapon != null) {
+            weapon.fire(game, this);
         }
     }
 }

@@ -38,11 +38,18 @@ public abstract class GameObject implements IObject {
         position.y = y;
         return this;
     }
+
     public GameObject setPosition(double x, double y){
         setX(x);
         setY(y);
         return this;
     }
+
+    public GameObject setPosition(Vector p){
+        position.set(p.x, p.y);
+        return this;
+    }
+
     public GameObject alignToGrid(double x, double y){
         setX(
                 Math.round((getX()/x))*x
@@ -71,6 +78,10 @@ public abstract class GameObject implements IObject {
 
     public Shape getCollisionArea(){
         return new Rectangle((int)position.x, (int)position.y, size.width, size.height);
+    }
+
+    public Vector getCenter(){
+        return new Vector(position.x + (size.width/2), position.y + (size.height/2));
     }
 
     public Event<GameObject> onCollision = new Event<>();

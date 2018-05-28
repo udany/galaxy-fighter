@@ -81,4 +81,8 @@ public abstract class Game extends MyFrame {
             o.draw(graphics);
         }
     }
+
+    public void addObject(GameObject obj) {
+        objectList.add(obj);
+    }
 }
