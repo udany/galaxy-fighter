@@ -16,6 +16,7 @@ public class Sprite {
     public int state = 0;
     protected int stateCount = 0;
     protected int currentVirtualFrame = 0;
+    public Vector origin = new Vector(0, 0);
 
     public Event onAnimationEnd = new Event();
 
@@ -114,8 +115,8 @@ public class Sprite {
     public Sprite draw (Graphics2D graphics, Vector p){
         if (animate()) nextFrame();
 
-        Vector d1 = p.clone();
-        Vector d2 = p.clone().add(size);
+        Vector d1 = p.clone().subtract(origin);
+        Vector d2 = p.clone().subtract(origin).add(size);
 
         int cFrame = getCurrentFrame();
 
