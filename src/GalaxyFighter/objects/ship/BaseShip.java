@@ -12,9 +12,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseShip extends MotionObject {
-
-    Sprite engineFire;
+abstract public class BaseShip extends MotionObject {
+    Sprite engineFireSprite;
 
     double baseAcceleration = 1;
     double maxSpeed = 3;

@@ -32,8 +32,8 @@ public class EdgeLiner extends BaseShip {
 
         currentSprite.applyPalette(paletteList.get(0));
 
-        engineFire = new Sprite(16, 16, "/images/EngineFire.png");
-        engineFire.setFramesPerFrame(3);
+        engineFireSprite = new Sprite(16, 16, "/images/EngineFire.png");
+        engineFireSprite.setFramesPerFrame(10);
     }
 
 
@@ -41,6 +41,6 @@ public class EdgeLiner extends BaseShip {
     public void draw(Graphics2D graphics) {
         super.draw(graphics);
 
-        engineFire.animate(true).draw(graphics, position.clone().add(1, 30));
+        engineFireSprite.animate(true).draw(graphics, position.clone().add(1, 30));
     }
 }
