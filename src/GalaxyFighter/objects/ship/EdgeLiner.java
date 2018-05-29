@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EdgeLiner extends BaseShip {
+public class EdgeLiner extends PlayerShip {
 
     public EdgeLiner(Game game) {
         super(game);

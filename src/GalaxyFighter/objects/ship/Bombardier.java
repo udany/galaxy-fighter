@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bombardier extends BaseShip {
+public class Bombardier extends PlayerShip {
 
     public Bombardier(Game game) {
         super(game);

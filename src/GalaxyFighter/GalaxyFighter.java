@@ -13,9 +13,9 @@ public class GalaxyFighter extends Game {
 
         BaseShip ship;
 
-        ship = new Bombardier(this);
-        ship.setPosition(240, 480-48);
-        objectList.add(ship);
+//        ship = new Bombardier(this);
+//        ship.setPosition(240, 480-48);
+//        objectList.add(ship);
 
         ship = new EdgeLiner(this);
         ship.setPosition(380, 480-48);
