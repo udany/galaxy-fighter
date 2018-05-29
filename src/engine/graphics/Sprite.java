@@ -3,7 +3,7 @@ package engine.graphics;
 import engine.base.Vector;
 import engine.base.Size;
 import engine.resources.ResourceLoader;
-import util.Event;
+import engine.util.Event;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

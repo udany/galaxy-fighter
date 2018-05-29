@@ -1,12 +1,6 @@
 package run;
 
-import util.MyFrame;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.util.Random;
+import engine.util.MyFrame;
 
 public class test {
     public static void main( String[] args ) {

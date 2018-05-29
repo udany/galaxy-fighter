@@ -1,4 +1,4 @@
-package util;
+package engine.util;
 
 public class EventData{
     public Object[] data;

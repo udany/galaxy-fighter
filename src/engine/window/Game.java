@@ -3,8 +3,8 @@ package engine.window;
 import engine.base.Size;
 import engine.input.Keyboard;
 import engine.main.GameObject;
-import util.Event;
-import util.MyFrame;
+import engine.util.Event;
+import engine.util.MyFrame;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,8 @@
 package GalaxyFighter.objects.bullets;
 
-import engine.graphics.Sprite;
 import engine.main.GameObject;
 import engine.main.MotionObject;
-import util.Event;
+import engine.util.Event;
 
 public class BaseBullet extends MotionObject {
     Event<GameObject> OnHitShip = new Event<>();

@@ -1,6 +1,5 @@
-package util;
+package engine.util;
 
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

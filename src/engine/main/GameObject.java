@@ -2,9 +2,8 @@ package engine.main;
 
 import engine.base.*;
 import engine.graphics.Sprite;
-import engine.window.Game;
-import util.Event;
-import util.EventData;
+import engine.util.Event;
+import engine.util.EventData;
 
 import java.awt.*;
 
