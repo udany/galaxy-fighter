@@ -14,6 +14,7 @@ public class Bombardier extends PlayerShip {
     public Bombardier(Game game) {
         super(game);
 
+
         weapon = new DoubleWeapon();
 
         baseAcceleration = 2000;

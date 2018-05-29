@@ -11,7 +11,7 @@ public class DoubleWeapon extends BaseWeapon {
         b = new SimpleBullet();
         b.setPosition(ship.getCenter().add(-13, -13));
         b.fire(-1);
-        b.setType(6);
+        b.setType(1);
 
         game.addObject(b);
 
@@ -19,7 +19,7 @@ public class DoubleWeapon extends BaseWeapon {
         b = new SimpleBullet();
         b.setPosition(ship.getCenter().add(7, -13));
         b.fire(-1);
-        b.setType(6);
+        b.setType(1);
 
         game.addObject(b);
     }

@@ -15,14 +15,14 @@ import java.util.List;
 abstract public class BaseShip extends MotionObject {
     Sprite engineFireSprite;
 
-    double baseAcceleration = 1;
-    double maxSpeed = 3;
-    double brakeRatio = 1;
+    protected double baseAcceleration = 1;
+    protected double maxSpeed = 3;
+    protected double brakeRatio = 1;
 
-    Game game;
-    BaseWeapon weapon;
-    boolean shouldFire;
-    double timeSinceLastShot = -1;
+    protected Game game;
+    protected BaseWeapon weapon;
+    protected boolean shouldFire;
+    protected double timeSinceLastShot = -1;
 
     public BaseShip(Game game) {
         this.game = game;
