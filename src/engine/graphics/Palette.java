@@ -1,6 +1,7 @@
 package engine.graphics;
 
 import engine.resources.ResourceLoader;
+import engine.util.ImageTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -29,16 +30,8 @@ public class Palette {
             rgb = swapColor(rgb, base.colors.get(i), colors.get(i));
         }
 
-        sprite.image = copyImage(sprite.image);
+        sprite.image = ImageTools.copyImage(sprite.image);
         sprite.image.setRGB(0, 0, w, h, rgb, 0, w);
-    }
-
-    public static BufferedImage copyImage(BufferedImage source){
-        BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
-        Graphics g = b.getGraphics();
-        g.drawImage(source, 0, 0, null);
-        g.dispose();
-        return b;
     }
 
     private int RGB_MASK = 0x00ffffff;
