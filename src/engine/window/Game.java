@@ -65,16 +65,18 @@ public abstract class Game extends MyFrame {
     private double fps;
     private boolean debug = true;
     private int msPerFrame;
+    private GraphicsEnvironment ge;
+    private GraphicsDevice gd;
+    private GraphicsConfiguration gc;
 
     private void setup() {
         canvas.createBufferStrategy( 2 );
         buffer = canvas.getBufferStrategy();
 
         // Get graphics configuration...
-        GraphicsEnvironment ge =
-                GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-        GraphicsConfiguration gc = gd.getDefaultConfiguration();
+        ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        gd = ge.getDefaultScreenDevice();
+        gc = gd.getDefaultConfiguration();
 
         // Create off-screen drawing surface
         bufferImage = gc.createCompatibleImage( size.width, size.height);
@@ -124,6 +126,30 @@ public abstract class Game extends MyFrame {
         }
     }
 
+    protected void draw(Graphics2D graphics){
+        graphics.setColor( background );
+        graphics.fillRect( 0, 0, size.width, size.height);
+
+        AffineTransform baseTransform = graphics.getTransform();
+        AffineTransform currentTransform;
+
+        for(GameObject o : objectList){
+            o.draw(graphics);
+
+            currentTransform = graphics.getTransform();
+            if (!currentTransform.equals(baseTransform)) {
+                graphics.setTransform(baseTransform);
+            }
+        }
+
+
+        if (debug) {
+            graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
+            graphics.setColor( Color.GREEN );
+            graphics.drawString( String.format( "FPS: %s", fps ), 20, 20 );
+        }
+    }
+
     protected void update(long elapsedMs){
         List<GameObject> objectsToRemove = objectList.stream().filter(x->x.isDestroyed()).collect(Collectors.toList());
 
@@ -150,30 +176,6 @@ public abstract class Game extends MyFrame {
                     obj.onCollision.emit(solidObj);
                 }
             }
-        }
-    }
-
-    protected void draw(Graphics2D graphics){
-        graphics.setColor( background );
-        graphics.fillRect( 0, 0, size.width, size.height);
-
-        AffineTransform baseTransform = graphics.getTransform();
-        AffineTransform currentTransform;
-
-        for(GameObject o : objectList){
-            o.draw(graphics);
-
-            currentTransform = graphics.getTransform();
-            if (!currentTransform.equals(baseTransform)) {
-                graphics.setTransform(baseTransform);
-            }
-        }
-
-
-        if (debug) {
-            graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
-            graphics.setColor( Color.GREEN );
-            graphics.drawString( String.format( "FPS: %s", fps ), 20, 20 );
         }
     }
 
