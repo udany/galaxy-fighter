@@ -6,29 +6,43 @@ import engine.resources.ResourceLoader;
 import engine.util.Event;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Sprite {
-    public String fileName;
+    String fileName;
     protected BufferedImage image;
     protected Size size = new Size();
     protected int frameCount = 0;
-    public int state = 0;
+    protected int state = 0;
     protected int stateCount = 0;
     protected int currentVirtualFrame = 0;
+    protected int framesPerFrame = 1;
+
     public Vector origin = new Vector(0, 0);
 
     public Event onAnimationEnd = new Event();
 
-    public void setFramesPerFrame(int framesPerFrame) {
-        this.framesPerFrame = framesPerFrame;
+    public Sprite(int w, int h, String file){
+        size.width = w;
+        size.height = h;
+
+        setImage(file);
     }
 
-    public void setState(int state) {
-        this.state = state % this.getStateCount();
+    // Basic image methods
+    public void setImage(String file) {
+        fileName = file;
+        image = ResourceLoader.loadImage(file);
+
+        if (image == null) {
+            System.out.println("Couldn't load sprite: "+file);
+        }
     }
 
-    protected int framesPerFrame = 1;
+    public void setImage(BufferedImage img) {
+        image = img;
+    }
 
     public int getWidth(){
         return size.width;
@@ -38,10 +52,11 @@ public class Sprite {
         return size.height;
     }
 
-    public void setImage(BufferedImage img) {
-        image = img;
+    public Vector getCenter(){
+        return new Vector(size.width/2, size.height/2);
     }
 
+    // Frame count and iteration logic
     public int getStateCount(){
         if (stateCount != 0){
             return stateCount;
@@ -88,21 +103,20 @@ public class Sprite {
         return (int)Math.floor(currentVirtualFrame/framesPerFrame);
     }
 
-    public Sprite(){}
-
-    public Sprite(int w, int h, String file){
-        size.width = w;
-        size.height = h;
-
-        setImage(file);
+    public void setFramesPerFrame(int framesPerFrame) {
+        this.framesPerFrame = framesPerFrame;
     }
 
-    public void setImage(String file) {
-        fileName = file;
-        image = ResourceLoader.loadImage(file);
+    public void setState(int state) {
+        this.state = state % this.getStateCount();
+    }
+
+    public int getState() {
+        return this.state;
     }
 
 
+    // Animation flag
     private boolean _animate = true;
     public boolean animate() {
         return _animate;
@@ -112,23 +126,48 @@ public class Sprite {
         return this;
     }
 
-    public Sprite draw (Graphics2D graphics, Vector p){
+
+    public Sprite draw (Graphics2D graphics, Vector position){
         if (animate()) nextFrame();
 
-        Vector d1 = p.clone().subtract(origin);
-        Vector d2 = p.clone().subtract(origin).add(size);
+        Vector d1 = position.clone().subtract(origin);
+        Vector d2 = position.clone().subtract(origin).add(size);
 
         int cFrame = getCurrentFrame();
 
         Vector s1 = new Vector(size.width * cFrame, size.height*state);
         Vector s2 = s1.clone().add(size);
 
+        rotateGraphics(graphics, position);
         graphics.drawImage(image,
                 (int)d1.x, (int)d1.y, (int)d2.x, (int)d2.y,
                 (int)s1.x, (int)s1.y, (int)s2.x, (int)s2.y, null);
 
         return this;
     }
+
+    protected double rotation = 0;
+    protected Vector rotationCenter = null;
+    private void rotateGraphics(Graphics2D graphics, Vector position) {
+        if (rotation == 0) return;;
+
+        Vector center = rotationCenter != null ? rotationCenter : getCenter();
+
+        center.subtract(origin).add(position);
+
+        AffineTransform at = AffineTransform.getRotateInstance(
+                rotation, center.x, center.y);
+
+        graphics.transform(at);
+    }
+
+    public Sprite rotate(double degrees) {
+        rotation = (degrees / 180) * Math.PI;
+
+        return this;
+    }
+
+
 
 
     /// PALETTES
