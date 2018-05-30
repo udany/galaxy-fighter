@@ -43,7 +43,7 @@ abstract public class PlayerShip extends BaseShip {
                     timeSinceLastShot = -1;
                     break;
                 case KeyEvent.VK_ENTER:
-                    currentSprite.setState(currentSprite.state + 1);
+                    currentSprite.setState(currentSprite.getState() + 1);
                     break;
             }
         });
