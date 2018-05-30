@@ -20,8 +20,6 @@ public class BaseEnemyShip extends BaseShip {
 
         currentSprite = new Sprite(64, 48, "/images/Ship_Bombardier.png");
         currentSprite.origin.set(23,8);
-
-
-
+        currentSprite.rotate(180);
     }
 }
