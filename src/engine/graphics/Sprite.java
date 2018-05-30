@@ -149,7 +149,7 @@ public class Sprite {
     protected double rotation = 0;
     protected Vector rotationCenter = null;
     private void rotateGraphics(Graphics2D graphics, Vector position) {
-        if (rotation == 0) return;;
+        if (rotation == 0) return;
 
         Vector center = rotationCenter != null ? rotationCenter : getCenter();
 
