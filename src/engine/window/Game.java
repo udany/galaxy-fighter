@@ -8,6 +8,7 @@ import engine.util.MyFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public abstract class Game extends MyFrame {
                     g2d = bufferImage.createGraphics();
                     onUpdate.emit(elapsed);
                     onPaint.emit(g2d);
+                    g2d.dispose();
 
                     // Blit image and flip...
                     graphics = buffer.getDrawGraphics();
@@ -155,9 +157,18 @@ public abstract class Game extends MyFrame {
         graphics.setColor( background );
         graphics.fillRect( 0, 0, size.width, size.height);
 
+        AffineTransform baseTransform = graphics.getTransform();
+        AffineTransform currentTransform;
+
         for(GameObject o : objectList){
             o.draw(graphics);
+
+            currentTransform = graphics.getTransform();
+            if (!currentTransform.equals(baseTransform)) {
+                graphics.setTransform(baseTransform);
+            }
         }
+
 
         if (debug) {
             graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
