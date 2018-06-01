@@ -1,5 +1,7 @@
 package engine.resources;
 
+import engine.sound.SoundData;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -51,11 +53,10 @@ public class ResourceLoader {
         });
     }
 
-    private static HashMap<String, AudioInputStream> soundCache = new HashMap<>();
-    public static AudioInputStream loadSound(String file) {
+    private static HashMap<String, SoundData> soundCache = new HashMap<>();
+    public static SoundData loadSound(String file) {
         return loadWithCache(soundCache, file, fileName -> {
-            URL url = getResourceUrl(fileName);
-            return AudioSystem.getAudioInputStream(url);
+            return new SoundData(file);
         });
     }
 }
