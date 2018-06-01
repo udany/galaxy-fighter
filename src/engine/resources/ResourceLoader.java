@@ -1,14 +1,12 @@
 package engine.resources;
 
 import engine.sound.SoundData;
+import engine.util.FileLogger;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.function.Supplier;
 
 public class ResourceLoader {
     private ResourceLoader() {}
@@ -35,6 +33,9 @@ public class ResourceLoader {
 
                 cache.put(key, resource);
             } catch (Exception e) {
+                FileLogger log = FileLogger.get("error.log");
+                log.error("Couldn't load " + key + "\n" + e.toString());
+
                 System.out.println("Failed loading resource " + key);
                 return null;
             }
