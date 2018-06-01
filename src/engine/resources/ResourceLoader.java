@@ -1,9 +1,12 @@
 package engine.resources;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class ResourceLoader {
     private ResourceLoader() {}
@@ -19,22 +22,40 @@ public class ResourceLoader {
         return getInstance().getClass().getResource(file);
     }
 
-    private static HashMap<String, BufferedImage> imageCache = new HashMap<>();
+    interface cacheLoader<T> {
+        public T load(String file) throws Exception;
+    }
 
-    public static BufferedImage loadImage(String file) {
-        if (!imageCache.containsKey(file)) {
-            URL url = getResourceUrl(file);
+    private static <T> T loadWithCache(HashMap<String, T> cache, String key, cacheLoader<T> loader) {
+        if (!cache.containsKey(key)) {
+            try {
+                T resource = loader.load(key);
 
-            try{
-                BufferedImage img = ImageIO.read(url);
-                imageCache.put(file, img);
-                return img;
-            }catch (Exception e){
-                System.out.println("Failed loading image "+url);
+                cache.put(key, resource);
+            } catch (Exception e) {
+                System.out.println("Failed loading resource " + key);
                 return null;
             }
-        } else {
-            return imageCache.get(file);
         }
+
+        return cache.get(key);
+    }
+
+
+
+    private static HashMap<String, BufferedImage> imageCache = new HashMap<>();
+    public static BufferedImage loadImage(String file) {
+        return loadWithCache(imageCache, file, fileName -> {
+            URL url = getResourceUrl(fileName);
+            return ImageIO.read(url);
+        });
+    }
+
+    private static HashMap<String, AudioInputStream> soundCache = new HashMap<>();
+    public static AudioInputStream loadSound(String file) {
+        return loadWithCache(soundCache, file, fileName -> {
+            URL url = getResourceUrl(fileName);
+            return AudioSystem.getAudioInputStream(url);
+        });
     }
 }
