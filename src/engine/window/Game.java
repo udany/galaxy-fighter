@@ -57,7 +57,7 @@ public abstract class Game extends MyFrame {
     }
 
 
-    private final int frameRate = 250;
+    private final int frameRate = 120;
     private BufferStrategy buffer;
     private Graphics2D g2d;
     private Graphics graphics;

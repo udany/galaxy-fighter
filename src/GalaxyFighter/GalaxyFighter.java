@@ -3,9 +3,8 @@ import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Bombardier;
 import GalaxyFighter.objects.ship.EdgeLiner;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
+import engine.sound.Music;
 import engine.window.Game;
-
-import java.awt.*;
 
 public class GalaxyFighter extends Game {
     public GalaxyFighter() {
@@ -25,6 +24,9 @@ public class GalaxyFighter extends Game {
         ship = new BaseEnemyShip(this);
         ship.setPosition(320, 15);
         objectList.add(ship);
+
+        Music bgm = new Music("/sound/music/03_Field_force.mp3");
+        bgm.start();
 
         start();
     }
