@@ -1,5 +1,7 @@
 package engine.sound;
 
+import engine.resources.ResourceLoader;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -10,26 +12,25 @@ import java.net.URL;
 public class SoundEffect {
     private Clip clip;
 
-    public SoundEffect(String file){
-        URL url = getClass().getResource(file);
+    public SoundEffect(String file) {
 
-        try{
+        try {
             clip = AudioSystem.getClip();
-            AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+            AudioInputStream ais = ResourceLoader.loadSound(file);
             clip.open(ais);
-        }catch (Exception e){
-            System.out.println("Failed loading sound "+url);
+        } catch (Exception e) {
+            System.out.println("Failed loading sound " + file);
         }
     }
 
-    public void start(){
+    public void start() {
         if (!clip.isRunning()) {
             clip.setMicrosecondPosition(0);
             clip.start();
         }
     }
 
-    public void stop(){
+    public void stop() {
         clip.stop();
     }
 
