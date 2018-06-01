@@ -3,6 +3,7 @@ package engine.sound;
 import engine.resources.ResourceLoader;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 public class SoundData {
@@ -14,8 +15,12 @@ public class SoundData {
     public SourceDataLine line;
 
     public SoundData(String file) throws Exception {
-        InputStream in = ResourceLoader.getResourceUrl(file).openStream(); //in an applet
-        AudioInputStream ais = AudioSystem.getAudioInputStream(in);
+        InputStream in = ResourceLoader.getResourceUrl(file).openStream();
+
+        // The streams needs to be mark enabled
+        InputStream bufferedIn = new BufferedInputStream(in);
+
+        AudioInputStream ais = AudioSystem.getAudioInputStream(bufferedIn);
         format = ais.getFormat();
 
         data = new byte[(int) ais.getFrameLength() * format.getFrameSize()];
