@@ -3,6 +3,7 @@ package engine.window;
 import engine.base.Size;
 import engine.input.Keyboard;
 import engine.main.GameObject;
+import engine.main.QuadTree;
 import engine.util.Event;
 import engine.util.MyFrame;
 
@@ -56,7 +57,6 @@ public abstract class Game extends MyFrame {
         setVisible(true);
     }
 
-
     private final int frameRate = 120;
     private BufferStrategy buffer;
     private Graphics2D g2d;
@@ -68,6 +68,8 @@ public abstract class Game extends MyFrame {
     private GraphicsEnvironment ge;
     private GraphicsDevice gd;
     private GraphicsConfiguration gc;
+
+    private QuadTree tree;
 
     private void setup() {
         canvas.createBufferStrategy( 2 );
@@ -85,6 +87,8 @@ public abstract class Game extends MyFrame {
     }
 
     public void start() {
+        tree = new QuadTree(size.width, size.height);
+
         setup();
 
         // Variables for counting frames per seconds
@@ -147,28 +151,39 @@ public abstract class Game extends MyFrame {
             graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
             graphics.setColor( Color.GREEN );
             graphics.drawString( String.format( "FPS: %s", fps ), 20, 20 );
+
+            //tree.draw(graphics);
         }
     }
 
     protected void update(long elapsedMs){
-        List<GameObject> objectsToRemove = objectList.stream().filter(x->x.isDestroyed()).collect(Collectors.toList());
+        List<GameObject> objectsToRemove = objectList.stream().filter(GameObject::isDestroyed).collect(Collectors.toList());
 
         objectList.removeAll(objectsToRemove);
+        tree.removeAll(objectsToRemove);
+
         objectList.addAll(objectsToAdd);
+        tree.insertAll(objectsToAdd.stream().filter(GameObject::isSolid).collect(Collectors.toList()));
         objectsToAdd.clear();
 
         for(GameObject o : objectList){
             o.update(((double)elapsedMs) / 1000);
+
+            if (o.hasMoved() && o.isSolid()) {
+                tree.update(o);
+            }
         }
         collisionChecking();
     }
 
     protected void collisionChecking(){
         List<GameObject> objectsToCheck = objectList.stream().filter(x->x.checkForCollisions()).collect(Collectors.toList());
-        List<GameObject> solidObjects = objectList.stream().filter(x->x.isSolid()).collect(Collectors.toList());
+        List<GameObject> potentialCollisions;
 
         for (GameObject obj : objectsToCheck){
-            for (GameObject solidObj : solidObjects){
+            potentialCollisions = tree.retrieve(obj);
+
+            for (GameObject solidObj : potentialCollisions){
                 Shape objShape = obj.getCollisionArea();
                 Shape solidShape = solidObj.getCollisionArea();
 
