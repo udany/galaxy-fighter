@@ -1,6 +1,5 @@
 package engine.main;
 
-import com.sun.org.apache.regexp.internal.RE;
 import engine.base.Vector;
 
 import java.awt.*;
@@ -58,6 +57,7 @@ public class QuadTree {
         } else {
             setMaxLevels(parent.getMaxLevels());
             setMaxObjects(parent.getMaxObjects());
+            nodeIndex = parent.nodeIndex;
         }
     }
 
@@ -106,10 +106,10 @@ public class QuadTree {
         float x = posX;
         float y = posY;
 
-        nodes[0] = new QuadTree(level + 1, x + subWidth, y, subWidth, subHeight);
-        nodes[1] = new QuadTree(level + 1, x, y, subWidth, subHeight);
-        nodes[2] = new QuadTree(level + 1, x, y + subHeight, subWidth, subHeight);
-        nodes[3] = new QuadTree(level + 1, x + subWidth, y + subHeight, subWidth, subHeight);
+        nodes[0] = new QuadTree(level + 1, x + subWidth, y, subWidth, subHeight, this);
+        nodes[1] = new QuadTree(level + 1, x, y, subWidth, subHeight, this);
+        nodes[2] = new QuadTree(level + 1, x, y + subHeight, subWidth, subHeight, this);
+        nodes[3] = new QuadTree(level + 1, x + subWidth, y + subHeight, subWidth, subHeight, this);
 
         // Gets rid of all of it's objects that can fit within a sub-node
         int i = 0;
@@ -164,10 +164,7 @@ public class QuadTree {
      */
     public QuadTree insert(GameObject obj) {
         if (isRoot()) {
-            QuadTree owner = nodeIndex.get(obj.getId());
-            if (owner != null) {
-                owner.objects.remove(obj);
-            }
+            remove(obj);
         }
 
         if (objects.size() >= MAX_OBJECTS && level < MAX_LEVELS) {
@@ -176,32 +173,30 @@ public class QuadTree {
             }
         }
 
-        QuadTree owner;
-
         if (nodes[0] != null) {
             int index = getIndex(obj);
 
             if (index != -1) {
-                owner = nodes[index].insert(obj);
+                return nodes[index].insert(obj);
             } else {
-                objects.add(obj);
-                owner = this;
+                return insertIntoList(obj);
             }
         } else {
-            objects.add(obj);
-            owner = this;
+            return insertIntoList(obj);
         }
-
-        if (isRoot()) {
-            addToIndex(obj, owner);
-        }
-
-        return owner;
     }
     public void insertAll(List<GameObject> objs) {
         for(GameObject obj : objs) {
             insert(obj);
         }
+    }
+    public QuadTree insertIntoList(GameObject obj) {
+        if (!objects.contains(obj)) {
+            objects.add(obj);
+            addToIndex(obj, this);
+        }
+
+        return this;
     }
 
     public void remove(GameObject obj) {
@@ -212,12 +207,55 @@ public class QuadTree {
             }
 
             nodeIndex.remove(obj.getId());
+        } else {
+            parent.remove(obj);
         }
     }
     public void removeAll(List<GameObject> objs) {
         for(GameObject obj : objs) {
             remove(obj);
         }
+    }
+
+    public void prune() {
+        List<GameObject> objListTemp = new ArrayList<>();
+
+        for (GameObject obj : objects) {
+            if (obj.isDestroyed()) {
+                objListTemp.add(obj);
+            }
+        }
+        objects.removeAll(objListTemp);
+        removeAll(objListTemp);
+
+        int emptyNodes = 0;
+
+        for (QuadTree node : nodes) {
+            if (node != null) {
+                node.prune();
+                if (node.getObjectCount() == 0) {
+                    emptyNodes ++;
+                }
+            }
+        }
+
+        if (emptyNodes == 4) {
+            nodes = new QuadTree[4];
+        }
+    }
+
+    public int getObjectCount() {
+        int count = 0;
+
+        for (QuadTree node : nodes) {
+            if (node != null) {
+                count += node.getObjectCount();
+            }
+        }
+
+        count += objects.size();
+
+        return count;
     }
 
     private void removeFromSelf(GameObject obj) {
@@ -232,16 +270,32 @@ public class QuadTree {
         nodeIndex.put(obj.getId(), node);
     }
 
+    public boolean intersects(Vector position) {
+        return (position.x >= posX && position.x <= (posX+width)) && (position.y >= posY && position.y <= (posY+height));
+    }
+    public boolean intersects(GameObject obj) {
+        Vector tempPos = obj.position.clone();
+
+        return intersects(tempPos) || // TopLeft
+                intersects(tempPos.add(obj.size)) || //BottomRight
+                intersects(tempPos.subtract(obj.size.width, 0)) || // BottomLeft
+                intersects(tempPos.subtract(-obj.size.width, obj.size.height)); //TopRight
+    }
+
     /*
      * Return all objects that could collide with the given object
      */
     public List<GameObject> retrieve(GameObject area) {
-        int index = getIndex(area);
+        return retrieve(area, null);
+    }
 
-        List<GameObject> returnObjects = new ArrayList<>();
+    public List<GameObject> retrieve(GameObject area, List<GameObject> returnObjects) {
+        if (returnObjects == null) returnObjects = new ArrayList<>();
 
-        if (index != -1 && nodes[0] != null) {
-            returnObjects.addAll(nodes[index].retrieve(area));
+        for (QuadTree node : nodes) {
+            if (node != null && node.intersects(area)) {
+                node.retrieve(area, returnObjects);
+            }
         }
 
         returnObjects.addAll(objects);
