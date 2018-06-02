@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class SoundEffectPool {
     private String file;
     private List<SoundEffect> soundEffects = new ArrayList<>();
+    private double volume = 1;
 
     public SoundEffectPool(String file) {
         this.file = file;
@@ -16,6 +17,7 @@ public class SoundEffectPool {
 
     private SoundEffect newSoundEffect() {
         SoundEffect sfx = new SoundEffect(this.file);
+        sfx.setVolume(volume);
         soundEffects.add(sfx);
         return sfx;
     }
@@ -26,6 +28,17 @@ public class SoundEffectPool {
             return available.get(0);
         } else {
             return newSoundEffect();
+        }
+    }
+
+    public double getVolume(){
+        return volume;
+    }
+
+    public void setVolume(double vol) {
+        volume = vol;
+        for (SoundEffect soundEffect : soundEffects) {
+            soundEffect.setVolume(volume);
         }
     }
 }
