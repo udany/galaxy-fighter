@@ -6,12 +6,18 @@ import engine.util.Event;
 import engine.util.EventData;
 
 import java.awt.*;
+import java.util.UUID;
 
 public abstract class GameObject implements IObject {
     protected Size size = new Size();
     protected Vector position = new Vector();
     protected Sprite currentSprite;
     protected boolean debug = false;
+
+    private UUID id = UUID.randomUUID();
+    public String getId() {
+        return id.toString();
+    }
 
     public int getWidth(){
         return size.width;
