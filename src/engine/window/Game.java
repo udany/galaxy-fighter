@@ -152,7 +152,7 @@ public abstract class Game extends MyFrame {
             graphics.setColor( Color.GREEN );
             graphics.drawString( String.format( "FPS: %s", fps ), 20, 20 );
 
-            //tree.draw(graphics);
+            // tree.draw(graphics);
         }
     }
 
@@ -173,6 +173,8 @@ public abstract class Game extends MyFrame {
                 tree.update(o);
             }
         }
+
+        tree.prune();
         collisionChecking();
     }
 
