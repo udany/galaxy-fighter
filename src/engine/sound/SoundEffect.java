@@ -62,9 +62,9 @@ public class SoundEffect {
         isPlayingFlag = false;
     }
 
-    public float getVolume() {
+    public double getVolume() {
         FloatControl gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-        return (float) Math.pow(10f, gainControl.getValue() / 20f);
+        return Math.pow(10f, gainControl.getValue() / 20f);
     }
 
     public void setVolume(double volume) {
