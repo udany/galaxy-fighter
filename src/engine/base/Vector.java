@@ -47,9 +47,21 @@ public class Vector {
         return this;
     }
 
-    public void set(double x, double y){
+    public Vector set(double x, double y){
         this.x = x;
         this.y = y;
+        return this;
+    }
+
+    public Vector scale(double ratio) {
+        return scale(ratio, ratio);
+    }
+
+    public Vector scale(double ratioX, double ratioY) {
+        x = x*ratioX;
+        y = y*ratioY;
+
+        return this;
     }
 
     public boolean equals(Vector obj) {
