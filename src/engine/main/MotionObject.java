@@ -10,6 +10,7 @@ public abstract class MotionObject extends GameObject {
 
     @Override
     public void update(double secondsElapsed) {
+        super.update(secondsElapsed);
         speed.add(acceleration.x*secondsElapsed, acceleration.y * secondsElapsed);
         position.add(speed.x*secondsElapsed, speed.y * secondsElapsed);
     }

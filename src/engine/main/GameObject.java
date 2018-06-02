@@ -13,8 +13,8 @@ public abstract class GameObject implements IObject {
     protected Vector position = new Vector();
     protected Sprite currentSprite;
     protected boolean debug = false;
-
     private UUID id = UUID.randomUUID();
+
     public String getId() {
         return id.toString();
     }
@@ -66,7 +66,13 @@ public abstract class GameObject implements IObject {
         return this;
     }
 
-    public abstract void update(double secondsElapsed);
+    private Vector lastPosition;
+    public void update(double secondsElapsed) {
+        lastPosition = position.clone();
+    }
+    public boolean hasMoved(){
+        return lastPosition == null || !position.equals(lastPosition);
+    }
 
     public void draw (Graphics2D graphics){
         if (currentSprite != null){
@@ -76,8 +82,6 @@ public abstract class GameObject implements IObject {
         if (debug) {
             graphics.setColor(new Color(255, 0,0, 58));
             graphics.draw(getCollisionArea());
-
-            // graphics.drawString("Score: "+current, (float)p.x, (float)p.y);
         }
     }
 

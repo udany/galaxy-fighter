@@ -51,4 +51,8 @@ public class Vector {
         this.x = x;
         this.y = y;
     }
+
+    public boolean equals(Vector obj) {
+        return x == obj.x && y == obj.y;
+    }
 }
