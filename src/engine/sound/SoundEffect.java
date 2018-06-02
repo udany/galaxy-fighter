@@ -28,15 +28,15 @@ public class SoundEffect {
         }
     }
 
-    private boolean isPlayingFlag = false;
+    private boolean isPlaying = false;
 
     public boolean isPlaying() {
-        return isPlayingFlag;
+        return isPlaying;
     }
 
     public void start() {
-        if (isPlayingFlag) return;
-        isPlayingFlag = true;
+        if (isPlaying) return;
+        isPlaying = true;
 
         new Thread(() -> {
             line.start();
@@ -53,13 +53,13 @@ public class SoundEffect {
             line.drain();
             line.stop();
 
-            isPlayingFlag = false;
+            isPlaying = false;
             onStop.emit();
         }).start();
     }
 
     public void stop() {
-        isPlayingFlag = false;
+        isPlaying = false;
     }
 
     public double getVolume() {
