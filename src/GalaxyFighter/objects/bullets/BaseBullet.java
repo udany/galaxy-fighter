@@ -12,7 +12,7 @@ public class BaseBullet extends MotionObject {
     public double baseAcceleration = 0;
 
     public BaseBullet() {
-
+        isSolid = true;
     }
 
     public void fire(int direction) {

@@ -15,17 +15,18 @@ public class GalaxyFighter extends Game {
 
         ship = new Bombardier(this);
         ship.setPosition(580, 480-48);
-        objectList.add(ship);
+        addObject(ship);
 
         ship = new EdgeLiner(this);
         ship.setPosition(680, 480-48);
-        objectList.add(ship);
+        addObject(ship);
 
         ship = new BaseEnemyShip(this);
         ship.setPosition(320, 15);
-        objectList.add(ship);
+        addObject(ship);
 
         Music bgm = new Music("/sound/music/03_Field_force.mp3");
+        bgm.setVolume(.3);
         bgm.start();
 
         start();

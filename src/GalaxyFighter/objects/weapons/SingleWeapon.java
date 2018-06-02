@@ -13,6 +13,7 @@ public class SingleWeapon extends BaseWeapon {
     public SingleWeapon() {
         cadence = .1;
         shootSound = new SoundEffectPool("/sound/sfx/Shoot_01.wav");
+        shootSound.setVolume(.3);
     }
 
     public void fire(Game game, BaseShip ship) {
