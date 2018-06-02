@@ -3,3 +3,6 @@
 
 #Output
 out/production
+
+#Logs
+*.log
