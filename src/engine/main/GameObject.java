@@ -80,7 +80,13 @@ public abstract class GameObject implements IObject {
         }
 
         if (debug) {
-            graphics.setColor(new Color(255, 0,0, 58));
+            Vector p = position.clone().add(-10, getHeight()+10);
+
+            graphics.setFont( new Font( "Courier New", Font.PLAIN, 9 ) );
+            graphics.setColor(new Color(0, 255, 3,100 ));
+            graphics.drawString(String.format("%s", id.toString().split("-")[4]), (int) p.x, (int) p.y);
+
+            graphics.setColor(new Color(24, 30, 255, 157));
             graphics.draw(getCollisionArea());
         }
     }
