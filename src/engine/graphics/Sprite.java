@@ -147,7 +147,7 @@ public class Sprite {
     }
 
     protected double rotation = 0;
-    protected Vector rotationCenter = null;
+    public Vector rotationCenter = null;
     private void rotateGraphics(Graphics2D graphics, Vector position) {
         if (rotation == 0) return;
 
