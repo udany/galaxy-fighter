@@ -87,6 +87,7 @@ abstract public class BaseShip extends MotionObject {
 
         super.update(secondsElapsed);
 
+        // keep within bounds
         if (position.x <= 0) {
             position.x = 0;
         }

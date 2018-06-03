@@ -1,11 +1,13 @@
 package GalaxyFighter.objects.ship;
 
 import GalaxyFighter.objects.weapons.BaseWeapon;
+import engine.base.Vector;
 import engine.graphics.Sprite;
 import engine.input.Keyboard;
 import engine.main.MotionObject;
 import engine.window.Game;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +62,14 @@ abstract public class PlayerShip extends BaseShip {
         }
     }
 
-    public void shoot() {
-        if (weapon != null) {
-            weapon.fire(game, this);
-        }
+
+    protected int maxRotation = 5;
+    @Override
+    public void draw(Graphics2D graphics) {
+        double speedRation = speed.x / maxSpeed;
+
+        currentSprite.rotationCenter = new Vector(32, 0);
+        currentSprite.rotate(speedRation * maxRotation);
+        super.draw(graphics);
     }
 }
