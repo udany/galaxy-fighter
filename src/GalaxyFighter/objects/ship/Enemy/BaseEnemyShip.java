@@ -29,7 +29,7 @@ public class BaseEnemyShip extends BaseShip {
         currentSprite.rotate(180);
 
         SoundEffect shootSound = new SoundEffect("/sound/sfx/Explosion_01.wav");
-        shootSound.setVolume(.9);
+        shootSound.setVolume(.5);
 
         Sprite explosion = new Sprite(32,32, "/images/Explosion.png");
         explosion.setFramesPerFrame(5);
