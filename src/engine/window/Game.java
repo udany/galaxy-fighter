@@ -4,6 +4,7 @@ import engine.base.Size;
 import engine.input.Keyboard;
 import engine.main.GameObject;
 import engine.main.QuadTree;
+import engine.main.Stage;
 import engine.util.Event;
 import engine.util.MyFrame;
 
@@ -20,8 +21,6 @@ public abstract class Game extends MyFrame {
     public Size size = new Size();
     private Color background;
     private Canvas canvas;
-
-    protected List<GameObject> objectList;
 
     protected Keyboard keyboard = Keyboard.getInstance();
 
@@ -42,7 +41,6 @@ public abstract class Game extends MyFrame {
         setResizable(false);
         centerOnScreen();
 
-        objectList = new ArrayList<>();
         onPaint.addListener(this::draw);
         onUpdate.addListener(this::update);
 
@@ -55,6 +53,11 @@ public abstract class Game extends MyFrame {
         add(canvas);
         pack();
         setVisible(true);
+
+        // Setup a base stage
+        baseStage = new Stage(this);
+        baseStage.start();
+        stages.add(baseStage);
     }
 
     protected int frameRate = 120;
@@ -68,8 +71,6 @@ public abstract class Game extends MyFrame {
     protected GraphicsEnvironment ge;
     protected GraphicsDevice gd;
     protected GraphicsConfiguration gc;
-
-    private QuadTree tree;
 
     private void setup() {
         canvas.createBufferStrategy( 2 );
@@ -90,8 +91,6 @@ public abstract class Game extends MyFrame {
     public long getGameTime() { return gameTime; }
 
     public void start() {
-        tree = new QuadTree(size.width, size.height);
-
         setup();
 
         // Variables for counting frames per seconds
@@ -133,22 +132,17 @@ public abstract class Game extends MyFrame {
         }
     }
 
+    Stage baseStage;
+    List<Stage> stages = new ArrayList<>();
+
     protected void draw(Graphics2D graphics){
         graphics.setColor( background );
         graphics.fillRect( 0, 0, size.width, size.height);
 
         AffineTransform baseTransform = graphics.getTransform();
-        AffineTransform currentTransform;
-
-        for(GameObject o : objectList){
-            o.draw(graphics);
-
-            currentTransform = graphics.getTransform();
-            if (!currentTransform.equals(baseTransform)) {
-                graphics.setTransform(baseTransform);
-            }
+        for (Stage stage : stages) {
+            stage.draw(graphics);
         }
-
 
         if (debug) {
             graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
@@ -160,48 +154,13 @@ public abstract class Game extends MyFrame {
     }
 
     protected void update(long elapsedMs){
-        List<GameObject> objectsToRemove = objectList.stream().filter(GameObject::isDestroyed).collect(Collectors.toList());
-
-        objectList.removeAll(objectsToRemove);
-        tree.removeAll(objectsToRemove);
-
-        objectList.addAll(objectsToAdd);
-        tree.insertAll(objectsToAdd.stream().filter(GameObject::isSolid).collect(Collectors.toList()));
-        objectsToAdd.clear();
-
-        for(GameObject o : objectList){
-            o.update(((double)elapsedMs) / 1000);
-
-            if (o.hasMoved() && o.isSolid()) {
-                tree.update(o);
-            }
-        }
-
-        tree.prune();
-        collisionChecking();
-    }
-
-    protected void collisionChecking(){
-        List<GameObject> objectsToCheck = objectList.stream().filter(x->x.checkForCollisions()).collect(Collectors.toList());
-        List<GameObject> potentialCollisions;
-
-        for (GameObject obj : objectsToCheck){
-            potentialCollisions = tree.retrieve(obj);
-
-            for (GameObject solidObj : potentialCollisions){
-                Shape objShape = obj.getCollisionArea();
-                Shape solidShape = solidObj.getCollisionArea();
-
-                if (objShape.intersects(solidShape.getBounds())){
-                    obj.onCollision.emit(solidObj);
-                }
-            }
+        for (Stage stage : stages) {
+            stage.update(elapsedMs);
         }
     }
 
 
-    protected List<GameObject> objectsToAdd = new ArrayList<>();
     public void addObject(GameObject obj) {
-        objectsToAdd.add(obj);
+        baseStage.addObject(obj);
     }
 }
