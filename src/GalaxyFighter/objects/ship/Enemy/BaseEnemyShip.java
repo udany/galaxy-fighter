@@ -14,7 +14,6 @@ import java.awt.*;
 public class BaseEnemyShip extends BaseShip {
 
     protected boolean immune = false;
-    protected HP hp;
 
     static SoundEffectPool damageSound = new SoundEffectPool("/sound/sfx/Damage_01.wav").setVolume(.1);
     static SoundEffectPool explosionSound = new SoundEffectPool("/sound/sfx/Explosion_01.wav").setVolume(.5);
@@ -24,7 +23,7 @@ public class BaseEnemyShip extends BaseShip {
     public BaseEnemyShip(Game game){
         super(game);
 
-        hp = new HP(50);
+        hp = new HP(10);
 
         weapon = new SingleWeapon();
 

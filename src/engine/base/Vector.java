@@ -34,8 +34,8 @@ public class Vector {
 
 
     public Vector subtract(double x, double y){
-        x -= x;
-        y -= y;
+        this.x -= x;
+        this.y -= y;
 
         return this;
     }

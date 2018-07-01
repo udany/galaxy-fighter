@@ -57,17 +57,17 @@ public abstract class Game extends MyFrame {
         setVisible(true);
     }
 
-    private final int frameRate = 120;
-    private BufferStrategy buffer;
-    private Graphics2D g2d;
-    private Graphics graphics;
-    private BufferedImage bufferImage;
-    private double fps;
-    private boolean debug = true;
-    private int msPerFrame;
-    private GraphicsEnvironment ge;
-    private GraphicsDevice gd;
-    private GraphicsConfiguration gc;
+    protected int frameRate = 120;
+    protected BufferStrategy buffer;
+    protected Graphics2D g2d;
+    protected Graphics graphics;
+    protected BufferedImage bufferImage;
+    protected double fps;
+    protected boolean debug = false;
+    protected int msPerFrame;
+    protected GraphicsEnvironment ge;
+    protected GraphicsDevice gd;
+    protected GraphicsConfiguration gc;
 
     private QuadTree tree;
 

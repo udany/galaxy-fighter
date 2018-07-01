@@ -1,4 +1,5 @@
 package GalaxyFighter;
+import GalaxyFighter.objects.background.GalaxyBackground;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Bombardier;
 import GalaxyFighter.objects.ship.EdgeLiner;
@@ -10,12 +11,13 @@ public class GalaxyFighter extends Game {
     public GalaxyFighter() {
         super(1280, 720);
         setTitle("Galaxy Fighter");
+        debug = true;
+        frameRate = 60;
+
+
+        addObject(new GalaxyBackground());
 
         BaseShip ship;
-
-        ship = new Bombardier(this);
-        ship.setPosition(580, 720-48);
-        addObject(ship);
 
         ship = new EdgeLiner(this);
         ship.setPosition(680, 720-48);

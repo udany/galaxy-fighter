@@ -1,5 +1,6 @@
 package GalaxyFighter.objects.ship;
 
+import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.weapons.BaseWeapon;
 import engine.graphics.Palette;
 import engine.graphics.Sprite;
@@ -29,6 +30,8 @@ abstract public class BaseShip extends MotionObject {
     }
 
     protected List<Integer> keys = new ArrayList<>();
+
+    protected HP hp;
 
     @Override
     public void update(double secondsElapsed) {
