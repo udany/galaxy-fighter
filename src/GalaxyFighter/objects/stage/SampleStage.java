@@ -6,8 +6,8 @@ import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import engine.main.Stage;
 import engine.window.Game;
 
-public class Test extends Stage {
-    public Test(Game game) {
+public class SampleStage extends Stage {
+    public SampleStage(Game game) {
         super(game);
 
         BaseShip ship;

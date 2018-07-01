@@ -1,11 +1,6 @@
 package GalaxyFighter;
 import GalaxyFighter.objects.background.GalaxyBackground;
-import GalaxyFighter.objects.ship.BaseShip;
-import GalaxyFighter.objects.ship.Bombardier;
-import GalaxyFighter.objects.ship.EdgeLiner;
-import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
-import GalaxyFighter.objects.stage.Test;
-import engine.sound.Music;
+import GalaxyFighter.objects.stage.SampleStage;
 import engine.window.Game;
 
 public class GalaxyFighter extends Game {
@@ -17,7 +12,7 @@ public class GalaxyFighter extends Game {
 
         addObject(new GalaxyBackground());
 
-        Test t = new Test(this);
+        SampleStage t = new SampleStage(this);
         addStage(t);
 
         start();
