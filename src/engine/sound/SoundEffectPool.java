@@ -35,10 +35,12 @@ public class SoundEffectPool {
         return volume;
     }
 
-    public void setVolume(double vol) {
+    public SoundEffectPool setVolume(double vol) {
         volume = vol;
         for (SoundEffect soundEffect : soundEffects) {
             soundEffect.setVolume(volume);
         }
+
+        return this;
     }
 }

@@ -1,18 +1,30 @@
 package GalaxyFighter.objects.ship.Enemy;
 
 import GalaxyFighter.objects.bullets.BaseBullet;
+import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Sprite;
 import engine.sound.SoundEffect;
+import engine.sound.SoundEffectPool;
 import engine.window.Game;
+
+import java.awt.*;
 
 public class BaseEnemyShip extends BaseShip {
 
     protected boolean immune = false;
+    protected HP hp;
+
+    static SoundEffectPool damageSound = new SoundEffectPool("/sound/sfx/Damage_01.wav").setVolume(.1);
+    static SoundEffectPool explosionSound = new SoundEffectPool("/sound/sfx/Explosion_01.wav").setVolume(.5);
+
+    Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setOrigin(-4,0);
 
     public BaseEnemyShip(Game game){
         super(game);
+
+        hp = new HP(50);
 
         weapon = new SingleWeapon();
 
@@ -28,30 +40,44 @@ public class BaseEnemyShip extends BaseShip {
         currentSprite.origin.set(13,8);
         currentSprite.rotate(180);
 
-        SoundEffect shootSound = new SoundEffect("/sound/sfx/Explosion_01.wav");
-        shootSound.setVolume(.5);
-
-        Sprite explosion = new Sprite(32,32, "/images/Explosion.png");
-        explosion.setFramesPerFrame(5);
-        explosion.origin.set(-4,0);
-
         onCollision.addListener(gameObject -> {
-
             if (gameObject instanceof BaseBullet) {
-                BaseBullet bullet = ((BaseBullet) gameObject);
-
-                if (bullet.isExploding()) return;
-
-                bullet.explode();
-
-                if (immune) return;
-
-                shootSound.start();
-                currentSprite = explosion;
-                explosion.onAnimationEnd.addListener(o -> this.destroy());
-
-                immune = true;
+                hit((BaseBullet) gameObject);
             }
         });
+    }
+
+    protected long timeLastHit = 0;
+    protected int drawHpInterval = 500;
+    public void hit(BaseBullet bullet) {
+        if (bullet.isExploding()) return;
+
+        bullet.explode();
+
+        hp.add(-bullet.damage);
+        timeLastHit = game.getGameTime();
+
+        if (hp.current > 0) {
+            damageSound.get().start();
+            return;
+        }
+
+        if (immune) return;
+
+        explosionSound.get().start();
+        currentSprite = explosion;
+        explosion.onAnimationEnd.addListener(o -> this.destroy());
+
+        immune = true;
+    }
+
+    @Override
+    public void draw(Graphics2D graphics) {
+        long elapsedSinceLastHit =game.getGameTime()  - timeLastHit;
+        if  (elapsedSinceLastHit <= drawHpInterval && hp.current > 0) {
+            hp.draw(graphics, position.clone().add(5, -10), 1 - ((double)elapsedSinceLastHit/drawHpInterval));
+        }
+
+        super.draw(graphics);
     }
 }

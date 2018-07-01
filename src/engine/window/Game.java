@@ -86,6 +86,9 @@ public abstract class Game extends MyFrame {
         msPerFrame = 1000/frameRate;
     }
 
+    long gameTime;
+    public long getGameTime() { return gameTime; }
+
     public void start() {
         tree = new QuadTree(size.width, size.height);
 
@@ -94,14 +97,14 @@ public abstract class Game extends MyFrame {
         // Variables for counting frames per seconds
         int frames = 0;
         long elapsed = 0;
-        long lastTime = System.currentTimeMillis();
+        gameTime = System.currentTimeMillis();
 
         while( true ) {
             try {
                 // count Frames per second...
-                elapsed = System.currentTimeMillis() - lastTime;
+                elapsed = System.currentTimeMillis() - gameTime;
                 if (elapsed >= msPerFrame) {
-                    lastTime = System.currentTimeMillis();
+                    gameTime = System.currentTimeMillis();
 
                     fps = 1000 / elapsed;
 

@@ -9,7 +9,7 @@ public class DoubleWeapon extends BaseWeapon {
 
     SoundEffectPool shootSound;
     public DoubleWeapon() {
-        cadence = .1;
+        cadence = .2;
         shootSound = new SoundEffectPool("/sound/sfx/Shoot_02.wav");
         shootSound.setVolume(.25);
     }

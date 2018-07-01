@@ -20,6 +20,10 @@ public class Sprite {
     protected int framesPerFrame = 1;
 
     public Vector origin = new Vector(0, 0);
+    public Sprite setOrigin(double x, double y) {
+        origin.set(x, y);
+        return this;
+    }
 
     public Event onAnimationEnd = new Event();
 
@@ -103,8 +107,9 @@ public class Sprite {
         return (int)Math.floor(currentVirtualFrame/framesPerFrame);
     }
 
-    public void setFramesPerFrame(int framesPerFrame) {
+    public Sprite setFramesPerFrame(int framesPerFrame) {
         this.framesPerFrame = framesPerFrame;
+        return this;
     }
 
     public void setState(int state) {
