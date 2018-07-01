@@ -14,6 +14,7 @@ public class Stage {
     public Stage(Game game) {
         this.game = game;
         this.size = game.size;
+        objectList = new ArrayList<>();
     }
 
     protected Game game;
@@ -27,7 +28,6 @@ public class Stage {
     private List<GameObject> objectList;
 
     public void start() {
-        objectList = new ArrayList<>();
         tree = new QuadTree(size.width, size.height);
     }
 

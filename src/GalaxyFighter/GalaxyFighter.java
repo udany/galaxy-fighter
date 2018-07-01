@@ -1,6 +1,8 @@
 package GalaxyFighter;
 import GalaxyFighter.objects.background.GalaxyBackground;
+import GalaxyFighter.objects.menu.TitleScreen;
 import GalaxyFighter.objects.stage.SampleStage;
+import engine.main.Stage;
 import engine.window.Game;
 
 public class GalaxyFighter extends Game {
@@ -12,8 +14,8 @@ public class GalaxyFighter extends Game {
 
         addObject(new GalaxyBackground());
 
-        SampleStage t = new SampleStage(this);
-        addStage(t);
+        Stage stage = new TitleScreen(this);
+        addStage(stage);
 
         start();
     }

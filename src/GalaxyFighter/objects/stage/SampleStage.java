@@ -24,10 +24,6 @@ public class SampleStage extends Stage {
             }
         }
 
-        //Music bgm = new Music("/sound/music/01_Interstellar.mp3");
-        //bgm.setVolume(.3);
-        //bgm.start();
-
         start();
     }
 }
