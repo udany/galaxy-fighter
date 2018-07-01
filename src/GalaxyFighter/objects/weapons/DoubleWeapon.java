@@ -2,9 +2,19 @@ package GalaxyFighter.objects.weapons;
 
 import GalaxyFighter.objects.bullets.SimpleBullet;
 import GalaxyFighter.objects.ship.BaseShip;
+import engine.sound.SoundEffectPool;
 import engine.window.Game;
 
 public class DoubleWeapon extends BaseWeapon {
+
+    SoundEffectPool shootSound;
+    public DoubleWeapon() {
+        cadence = .1;
+        shootSound = new SoundEffectPool("/sound/sfx/Shoot_02.wav");
+        shootSound.setVolume(.25);
+    }
+
+
     public void fire(Game game, BaseShip ship) {
         SimpleBullet b;
 
@@ -22,5 +32,7 @@ public class DoubleWeapon extends BaseWeapon {
         b.setType(6);
 
         game.addObject(b);
+
+        shootSound.get().start();
     }
 }
