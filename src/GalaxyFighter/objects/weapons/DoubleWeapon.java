@@ -2,6 +2,7 @@ package GalaxyFighter.objects.weapons;
 
 import GalaxyFighter.objects.bullets.SimpleBullet;
 import GalaxyFighter.objects.ship.BaseShip;
+import engine.main.Stage;
 import engine.sound.SoundEffectPool;
 import engine.window.Game;
 
@@ -15,7 +16,7 @@ public class DoubleWeapon extends BaseWeapon {
     }
 
 
-    public void fire(Game game, BaseShip ship) {
+    public void fire(Stage game, BaseShip ship) {
         SimpleBullet b;
 
         b = new SimpleBullet();

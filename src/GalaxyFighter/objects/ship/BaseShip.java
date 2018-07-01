@@ -6,6 +6,7 @@ import engine.graphics.Palette;
 import engine.graphics.Sprite;
 import engine.input.Keyboard;
 import engine.main.MotionObject;
+import engine.main.Stage;
 import engine.window.Game;
 
 import java.awt.*;
@@ -20,12 +21,12 @@ abstract public class BaseShip extends MotionObject {
     protected double maxSpeed = 3;
     protected double brakeRatio = 1;
 
-    protected Game game;
+    protected Stage game;
     protected BaseWeapon weapon;
     protected boolean shouldFire;
     protected double timeSinceLastShot = -1;
 
-    public BaseShip(Game game) {
+    public BaseShip(Stage game) {
         this.game = game;
     }
 

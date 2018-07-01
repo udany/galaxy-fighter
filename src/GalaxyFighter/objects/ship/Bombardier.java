@@ -3,6 +3,7 @@ package GalaxyFighter.objects.ship;
 import GalaxyFighter.objects.weapons.DoubleWeapon;
 import engine.graphics.Palette;
 import engine.graphics.Sprite;
+import engine.main.Stage;
 import engine.window.Game;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class Bombardier extends PlayerShip {
 
-    public Bombardier(Game game) {
+    public Bombardier(Stage game) {
         super(game);
 
 

@@ -5,6 +5,7 @@ import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Sprite;
+import engine.main.Stage;
 import engine.sound.SoundEffect;
 import engine.sound.SoundEffectPool;
 import engine.window.Game;
@@ -20,7 +21,7 @@ public class BaseEnemyShip extends BaseShip {
 
     Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setOrigin(-4,0);
 
-    public BaseEnemyShip(Game game){
+    public BaseEnemyShip(Stage game){
         super(game);
 
         hp = new HP(10);

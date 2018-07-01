@@ -4,6 +4,7 @@ import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Bombardier;
 import GalaxyFighter.objects.ship.EdgeLiner;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
+import GalaxyFighter.objects.stage.Test;
 import engine.sound.Music;
 import engine.window.Game;
 
@@ -14,26 +15,10 @@ public class GalaxyFighter extends Game {
         debug = true;
         frameRate = 60;
 
-
         addObject(new GalaxyBackground());
 
-        BaseShip ship;
-
-        ship = new EdgeLiner(this);
-        ship.setPosition(680, 720-48);
-        addObject(ship);
-
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
-                ship = new BaseEnemyShip(this);
-                ship.setPosition((128 * i) +40, (j * 72) + 15);
-                addObject(ship);
-            }
-        }
-
-        //Music bgm = new Music("/sound/music/01_Interstellar.mp3");
-        //bgm.setVolume(.3);
-        //bgm.start();
+        Test t = new Test(this);
+        addStage(t);
 
         start();
     }
