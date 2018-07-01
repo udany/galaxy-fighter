@@ -133,7 +133,9 @@ public abstract class Game extends MyFrame {
     }
 
     Stage baseStage;
-    List<Stage> stages = new ArrayList<>();
+    protected List<Stage> stages = new ArrayList<>();
+    public void addStage(Stage s) { stages.add(s); }
+    public void removeStage(Stage s) { stages.remove(s); }
 
     protected void draw(Graphics2D graphics){
         graphics.setColor( background );

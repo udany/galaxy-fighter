@@ -20,7 +20,7 @@ public class Stage {
     public Game getGame() { return game; }
     public long getGameTime() { return game.getGameTime(); }
 
-    protected Size size;
+    public Size size;
     public Event<Graphics2D> onPaint = new Event<>();
     public Event<Long> onUpdate = new Event<>();
     private QuadTree tree;
