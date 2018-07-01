@@ -29,9 +29,9 @@ public class GalaxyFighter extends Game {
             }
         }
 
-        Music bgm = new Music("/sound/music/01_Interstellar.mp3");
-        bgm.setVolume(.3);
-        bgm.start();
+        //Music bgm = new Music("/sound/music/01_Interstellar.mp3");
+        //bgm.setVolume(.3);
+        //bgm.start();
 
         start();
     }
