@@ -112,8 +112,9 @@ public class Sprite {
         return this;
     }
 
-    public void setState(int state) {
+    public Sprite setState(int state) {
         this.state = state % this.getStateCount();
+        return this;
     }
 
     public int getState() {

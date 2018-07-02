@@ -1,10 +1,9 @@
 package GalaxyFighter.objects.weapons;
 
-import GalaxyFighter.objects.bullets.SimpleBullet;
+import GalaxyFighter.objects.bullets.PlayerBullet;
 import GalaxyFighter.objects.ship.BaseShip;
 import engine.main.Stage;
 import engine.sound.SoundEffectPool;
-import engine.window.Game;
 
 public class DoubleWeapon extends BaseWeapon {
 
@@ -17,9 +16,9 @@ public class DoubleWeapon extends BaseWeapon {
 
 
     public void fire(Stage game, BaseShip ship) {
-        SimpleBullet b;
+        PlayerBullet b;
 
-        b = new SimpleBullet();
+        b = new PlayerBullet();
         b.setPosition(ship.getCenter().add(-13, -13));
         b.fire(-1);
         b.setType(6);
@@ -27,7 +26,7 @@ public class DoubleWeapon extends BaseWeapon {
         game.addObject(b);
 
 
-        b = new SimpleBullet();
+        b = new PlayerBullet();
         b.setPosition(ship.getCenter().add(7, -13));
         b.fire(-1);
         b.setType(6);

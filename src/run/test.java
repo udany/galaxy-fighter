@@ -1,12 +1,17 @@
 package run;
 
-import engine.util.MyFrame;
+import GalaxyFighter.GalaxyFighter;
+import GalaxyFighter.objects.ship.EdgeLiner;
+import GalaxyFighter.objects.stage.SampleStage;
+import engine.window.Game;
 
 public class test {
     public static void main( String[] args ) {
-        // Create game window...
-        MyFrame app = new MyFrame();
-
-
+        Game g = new GalaxyFighter(
+                new SampleStage(
+                        new EdgeLiner()
+                )
+        );
+        g.open();
     }
 }

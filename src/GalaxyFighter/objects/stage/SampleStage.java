@@ -22,7 +22,7 @@ public class SampleStage extends Stage {
 
         BaseShip ship;
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 1; j++) {
                 ship = new BaseEnemyShip();
                 ship.setPosition((128 * i) +40, (j * 72) + 15);
                 addObject(ship);

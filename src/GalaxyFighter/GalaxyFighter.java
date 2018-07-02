@@ -7,6 +7,9 @@ import engine.window.Game;
 
 public class GalaxyFighter extends Game {
     public GalaxyFighter() {
+        this(null);
+    }
+    public GalaxyFighter(Stage startingStage) {
         super(1280, 720);
         setTitle("Galaxy Fighter");
         debug = true;
@@ -14,8 +17,11 @@ public class GalaxyFighter extends Game {
 
         addObject(new GalaxyBackground());
 
-        Stage stage = new TitleScreen();
-        addStage(stage);
+        if (startingStage == null) {
+            startingStage = new TitleScreen();
+        }
+
+        addStage(startingStage);
 
         start();
     }

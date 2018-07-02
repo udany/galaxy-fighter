@@ -1,9 +1,12 @@
 package GalaxyFighter.objects.ship;
 
+import GalaxyFighter.objects.ship.Enemy.EnemyBullet;
 import GalaxyFighter.objects.util.HP;
 import engine.base.Vector;
 import engine.graphics.Color;
+import engine.graphics.Sprite;
 import engine.input.Keyboard;
+import engine.sound.SoundEffect;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,11 +14,16 @@ import java.awt.geom.AffineTransform;
 
 abstract public class PlayerShip extends BaseShip {
 
+    static SoundEffect explosionSound = new SoundEffect("/sound/sfx/Explosion_01.wav").setVolume(.5);
+    protected Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setState(1).setOrigin(-4,0);
+
     public PlayerShip() {
-        hp = new HP(100);
+        hp = new HP(20);
         hp.size.set(500, 8);
         hp.setBackground(new Color(0, 0, 0, 120));
-        hp.current = 50;
+
+        checkForCollisions = true;
+        debug = true;
 
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
@@ -50,6 +58,13 @@ abstract public class PlayerShip extends BaseShip {
                     break;
             }
         });
+
+
+        onCollision.addListener(obj -> {
+            if (obj instanceof EnemyBullet) {
+                hit((EnemyBullet) obj);
+            }
+        });
     }
 
     private void movementKeyDown(int key) {
@@ -60,6 +75,25 @@ abstract public class PlayerShip extends BaseShip {
         int idx = keys.indexOf(key);
         if (idx >= 0) {
             keys.remove(idx);
+        }
+    }
+
+    public boolean immune = false;
+    protected void hit(EnemyBullet bullet) {
+        if (bullet.isExploding()) return;
+
+        this.hp.add(-bullet.damage);
+
+        bullet.explode();
+
+        if (hp.current == 0) {
+            explosionSound.start();
+            currentSprite = explosion;
+            explosion.onAnimationEnd.addListener(o -> {
+                this.destroy();
+            });
+
+            immune = true;
         }
     }
 

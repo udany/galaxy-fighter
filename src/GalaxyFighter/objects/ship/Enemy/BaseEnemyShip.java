@@ -1,14 +1,17 @@
 package GalaxyFighter.objects.ship.Enemy;
 
 import GalaxyFighter.objects.bullets.BaseBullet;
+import GalaxyFighter.objects.bullets.PlayerBullet;
 import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Sprite;
+import engine.input.Keyboard;
 import engine.sound.SoundEffect;
 import engine.sound.SoundEffectPool;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class BaseEnemyShip extends BaseShip {
 
@@ -37,16 +40,25 @@ public class BaseEnemyShip extends BaseShip {
         currentSprite.rotate(180);
 
         onCollision.addListener(gameObject -> {
-            if (gameObject instanceof BaseBullet) {
-                hit((BaseBullet) gameObject);
+            if (gameObject instanceof PlayerBullet) {
+                hit((PlayerBullet) gameObject);
+            }
+        });
+
+        weapon = new EnemySingleWeapon();
+
+        Keyboard.getInstance().onKeyDown.addListener(key -> {
+            if (key == KeyEvent.VK_B) {
+                shoot();
             }
         });
     }
 
     protected long timeLastHit = 0;
     protected int drawHpInterval = 500;
-    public void hit(BaseBullet bullet) {
+    public void hit(PlayerBullet bullet) {
         if (bullet.isExploding()) return;
+        if (immune) return;
 
         bullet.explode();
 
@@ -57,8 +69,6 @@ public class BaseEnemyShip extends BaseShip {
             damageSound.get().start();
             return;
         }
-
-        if (immune) return;
 
         explosionSound.get().start();
         currentSprite = explosion;

@@ -2,8 +2,8 @@ package GalaxyFighter.objects.bullets;
 
 import engine.graphics.Sprite;
 
-public class SimpleBullet extends BaseBullet {
-    public SimpleBullet() {
+public class PlayerBullet extends BaseBullet {
+    public PlayerBullet() {
         super();
 
         baseAcceleration = 0;
