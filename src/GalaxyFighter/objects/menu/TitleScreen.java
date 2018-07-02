@@ -3,28 +3,34 @@ package GalaxyFighter.objects.menu;
 import engine.base.Vector;
 import engine.graphics.Sprite;
 import engine.main.Stage;
+import engine.sound.SoundEffect;
 import engine.window.Game;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class TitleScreen extends Stage {
 
-    public TitleScreen(Game game) {
-        super(game);
+    public TitleScreen() {
 
-        start();
-    }
+        SoundEffect shootSound = new SoundEffect("/sound/sfx/Shoot_01.wav");
 
-    Sprite titleSprite = new Sprite(573, 189, "/images/Title.png");
-    Vector titlePosition = new Vector(340, 100);
+        Menu menu = new Menu(Arrays.asList(
+                new MenuOption("Teste"),
+                new MenuOption("Teste2", ()->{
+                    shootSound.start();
+                })
+        )).setFont("/fonts/pixelmix.ttf", 35);
 
-    public void start() {
-        super.start();
+        addObject(menu);
 
         //Music bgm = new Music("/sound/music/01_Interstellar.mp3");
         //bgm.setVolume(.3);
         //bgm.start();
     }
+
+    Sprite titleSprite = new Sprite(573, 189, "/images/Title.png");
+    Vector titlePosition = new Vector(360, 100);
 
     @Override
     public void draw(Graphics2D graphics) {

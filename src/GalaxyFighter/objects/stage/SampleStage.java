@@ -4,12 +4,9 @@ import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.EdgeLiner;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import engine.main.Stage;
-import engine.window.Game;
 
 public class SampleStage extends Stage {
-    public SampleStage(Game game) {
-        super(game);
-
+    public SampleStage() {
         BaseShip ship;
 
         ship = new EdgeLiner(this);
@@ -23,7 +20,5 @@ public class SampleStage extends Stage {
                 addObject(ship);
             }
         }
-
-        start();
     }
 }

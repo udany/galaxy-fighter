@@ -14,7 +14,7 @@ public class GalaxyFighter extends Game {
 
         addObject(new GalaxyBackground());
 
-        Stage stage = new TitleScreen(this);
+        Stage stage = new TitleScreen();
         addStage(stage);
 
         start();

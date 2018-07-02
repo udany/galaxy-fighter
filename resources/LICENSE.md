@@ -8,3 +8,6 @@
 #### Sound effects
 - The Chayed, hosted on [opengameart.org](https://opengameart.org/users/the-chayed)
 - dravenx, hosted on [opengameart.org](https://opengameart.org/content/space-shooter-sound-effects)
+
+### Fonts
+- PixelMix by Andrew Tyler
