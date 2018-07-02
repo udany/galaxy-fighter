@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class Stage {
     public Stage() {
-        this.size = game.size;
         objectList = new ArrayList<>();
     }
 
@@ -28,6 +27,8 @@ public class Stage {
     public Event<Long> onUpdate = new Event<>();
     public Event<Game> onAdd = new Event<Game>().addListener(g -> {
         game = g;
+        this.size = game.size;
+
         bindToKeyboard();
         unpause();
     });

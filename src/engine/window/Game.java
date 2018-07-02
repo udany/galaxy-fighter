@@ -55,7 +55,7 @@ public abstract class Game extends MyFrame {
         setVisible(true);
 
         // Setup a base stage
-        baseStage = new Stage(this);
+        baseStage = new Stage();
         baseStage.start();
         stages.add(baseStage);
     }
