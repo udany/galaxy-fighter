@@ -38,6 +38,8 @@ public class EdgeLiner extends PlayerShip {
     public void draw(Graphics2D graphics) {
         super.draw(graphics);
 
+        if (exploding) return;
+
         engineFireSprite.animate(true).draw(graphics, position.clone().add(1, 30));
     }
 }

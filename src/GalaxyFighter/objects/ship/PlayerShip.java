@@ -16,12 +16,16 @@ import java.awt.geom.AffineTransform;
 abstract public class PlayerShip extends BaseShip {
 
     static SoundEffect explosionSound = new SoundEffect("/sound/sfx/Explosion_01.wav").setVolume(.5);
+    static SoundEffect damageSound = new SoundEffect("/sound/sfx/Damage_01.wav").setVolume(.1);
     protected Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setState(1).setOrigin(-4,0);
+
+    protected Sprite hpOverlay = new Sprite(40,150, "/images/left_hbar.png");
 
     public PlayerShip() {
         hp = new HP(20);
-        hp.size.set(500, 8);
-        hp.setBackground(new Color(0, 0, 0, 120));
+        hp.size.set(104, 20);
+        hp.setBackground(new Color(0, 0, 0, 0));
+        hp.setBackground(new Color(0, 0, 0, 0));
 
         checkForCollisions = true;
 
@@ -79,13 +83,15 @@ abstract public class PlayerShip extends BaseShip {
     }
 
     public Event onDeath = new Event();
-    public boolean immune = false;
+    public boolean exploding = false;
     protected void hit(EnemyBullet bullet) {
         if (bullet.isExploding()) return;
+        if (exploding) return;
 
         this.hp.add(-bullet.damage);
-
         bullet.explode();
+
+        damageSound.start();
 
         if (hp.current == 0) {
             explosionSound.start();
@@ -95,13 +101,15 @@ abstract public class PlayerShip extends BaseShip {
                 this.destroy();
             });
 
-            immune = true;
+            exploding = true;
         }
     }
 
 
     protected int maxRotation = 5;
-    protected Vector hpBarPosition = new Vector(10, 700);
+    protected Vector hpBarOverlayPosition = new Vector(0, 570);
+    protected Vector hpBarPosition = hpBarOverlayPosition.clone().add(9, 126);
+
     @Override
     public void draw(Graphics2D graphics) {
         AffineTransform baseTransform = graphics.getTransform();
@@ -113,6 +121,17 @@ abstract public class PlayerShip extends BaseShip {
         super.draw(graphics);
 
         graphics.setTransform(baseTransform);
+
+
+
+        AffineTransform at = AffineTransform.getRotateInstance(
+                Math.PI * 3/2, hpBarPosition.x, hpBarPosition.y);
+
+        graphics.transform(at);
         hp.draw(graphics, hpBarPosition);
+
+        graphics.setTransform(baseTransform);
+
+        hpOverlay.draw(graphics, hpBarOverlayPosition);
     }
 }
