@@ -1,9 +1,11 @@
 package GalaxyFighter.objects.menu;
 
 import engine.base.Vector;
+import engine.graphics.Color;
 import engine.graphics.Sprite;
 import engine.main.Stage;
 import engine.sound.Music;
+import engine.window.Transition.FadeIn;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -11,8 +13,6 @@ import java.util.Arrays;
 public class TitleScreen extends Stage {
 
     public TitleScreen() {
-
-
         Menu menu = new Menu(Arrays.asList(
                 new MenuOption("Choose Your Ship:"),
                 new MenuOption("Bombardier", ()->{
@@ -25,7 +25,12 @@ public class TitleScreen extends Stage {
 
         Music bgm = new Music("/sound/music/01_Interstellar.mp3");
         bgm.setVolume(.05);
-        bgm.start();
+        //bgm.start();
+
+        onAdd.addListener(x -> {
+            FadeIn fadeIn = new FadeIn(new Color(0,0,0), 2, game);
+            game.transition(fadeIn);
+        });
 
         onRemove.addListener(x -> {
             bgm.stop();
