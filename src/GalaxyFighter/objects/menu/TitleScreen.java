@@ -16,8 +16,11 @@ public class TitleScreen extends Stage {
         SoundEffect shootSound = new SoundEffect("/sound/sfx/Shoot_01.wav");
 
         Menu menu = new Menu(Arrays.asList(
-                new MenuOption("Teste"),
-                new MenuOption("Teste2", ()->{
+                new MenuOption("Choose Your Ship:"),
+                new MenuOption("Bombardier", ()->{
+                    shootSound.start();
+                }),
+                new MenuOption("Edgeliner", ()->{
                     shootSound.start();
                 })
         )).setFont("/fonts/pixelmix.ttf", 35);

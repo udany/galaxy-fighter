@@ -26,7 +26,7 @@ public class Menu extends GameObject {
         super();
 
         this.options = items;
-        selectedOption = items.get(0);
+        move(1);
 
         Keyboard kb = Keyboard.getInstance();
 
@@ -36,6 +36,8 @@ public class Menu extends GameObject {
                     move(1);
                 } else if (key == KeyEvent.VK_UP) {
                     move(-1);
+                } else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
+                    select();
                 }
             }, id.toString());
         });
@@ -55,6 +57,14 @@ public class Menu extends GameObject {
         } else {
             selectedOption = options.get(idx + direction);
         }
+
+        if (!selectedOption.isSelectable()) {
+            move(direction);
+        }
+    }
+
+    public void select() {
+        selectedOption.select();
     }
 
     public Menu setFont(String file, double size) {
