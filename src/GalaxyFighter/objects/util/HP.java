@@ -16,7 +16,7 @@ public class HP {
             new Color(0,255, 0, 0)
     );
 
-    Size size = new Size(32,4);
+    public Size size = new Size(32,4);
 
     public int current = 0;
     public int total = 0;

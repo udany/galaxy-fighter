@@ -1,13 +1,22 @@
 package GalaxyFighter.objects.ship;
 
+import GalaxyFighter.objects.util.HP;
 import engine.base.Vector;
+import engine.graphics.Color;
 import engine.input.Keyboard;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 
 abstract public class PlayerShip extends BaseShip {
+
     public PlayerShip() {
+        hp = new HP(100);
+        hp.size.set(500, 8);
+        hp.setBackground(new Color(0, 0, 0, 120));
+        hp.current = 50;
+
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
         kb.onKeyDown.addListener(code -> {
@@ -56,12 +65,18 @@ abstract public class PlayerShip extends BaseShip {
 
 
     protected int maxRotation = 5;
+    protected Vector hpBarPosition = new Vector(10, 700);
     @Override
     public void draw(Graphics2D graphics) {
+        AffineTransform baseTransform = graphics.getTransform();
+
         double speedRation = speed.x / maxSpeed;
 
         currentSprite.rotationCenter = new Vector(32, 0);
         currentSprite.rotate(speedRation * maxRotation);
         super.draw(graphics);
+
+        graphics.setTransform(baseTransform);
+        hp.draw(graphics, hpBarPosition);
     }
 }
