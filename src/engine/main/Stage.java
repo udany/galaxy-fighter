@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Stage {
@@ -101,7 +102,7 @@ public class Stage {
 
         List<GameObject> objectsToRemove = objectList.stream().filter(GameObject::isDestroyed).collect(Collectors.toList());
         objectList.removeAll(objectsToRemove);
-        objectsToAdd.forEach(obj -> obj.onRemove.emit(this));
+        objectsToRemove.forEach(obj -> obj.onRemove.emit(this));
 
         objectsToRemove = objectsToRemove.stream().filter(GameObject::isSolid).collect(Collectors.toList());
         tree.removeAll(objectsToRemove);
@@ -111,7 +112,10 @@ public class Stage {
         objectsToAdd.forEach(obj -> obj.onAdd.emit(this));
         objectsToAdd.clear();
 
-        for(GameObject o : objectList){
+
+        List<GameObject> list = new ArrayList<>();
+        list.addAll(objectList);
+        for(GameObject o : list){
             o.update(((double)elapsedMs) / 1000);
 
             if (o.hasMoved() && o.isSolid()) {
