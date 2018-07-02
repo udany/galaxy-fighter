@@ -65,12 +65,14 @@ public class Stage {
 
         List<GameObject> objectsToRemove = objectList.stream().filter(GameObject::isDestroyed).collect(Collectors.toList());
         objectList.removeAll(objectsToRemove);
+        objectsToAdd.forEach(obj -> obj.onRemove.emit(this));
 
         objectsToRemove = objectsToRemove.stream().filter(GameObject::isSolid).collect(Collectors.toList());
         tree.removeAll(objectsToRemove);
 
         objectList.addAll(objectsToAdd);
         tree.insertAll(objectsToAdd.stream().filter(GameObject::isSolid).collect(Collectors.toList()));
+        objectsToAdd.forEach(obj -> obj.onAdd.emit(this));
         objectsToAdd.clear();
 
         for(GameObject o : objectList){

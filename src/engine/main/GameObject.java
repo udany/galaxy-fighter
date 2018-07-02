@@ -13,7 +13,7 @@ public abstract class GameObject implements IObject {
     protected Vector position = new Vector();
     protected Sprite currentSprite;
     protected boolean debug = false;
-    private UUID id = UUID.randomUUID();
+    protected UUID id = UUID.randomUUID();
 
     public String getId() {
         return id.toString();
@@ -49,7 +49,6 @@ public abstract class GameObject implements IObject {
         setY(y);
         return this;
     }
-
     public GameObject setPosition(Vector p){
         position.set(p.x, p.y);
         return this;
@@ -102,7 +101,6 @@ public abstract class GameObject implements IObject {
     public Event<GameObject> onCollision = new Event<>();
 
     protected boolean checkForCollisions = false;
-
     /**
      * Means it should check for collisions with other objects
      * @return
@@ -112,10 +110,9 @@ public abstract class GameObject implements IObject {
     }
 
     protected boolean isSolid = false;
-
     /**
      * Means another object can collide with this
-     * @return
+     * @return boolean
      */
     public boolean isSolid(){
         return isSolid;
@@ -128,9 +125,16 @@ public abstract class GameObject implements IObject {
     }
 
     private boolean destroyed = false;
+
     public void destroy(){
         destroyed = true;
         onDestroy.emit();
     }
 
+    Stage currentStage;
+
+    public Event<Stage> onAdd = new Event<Stage>().addListener(s -> {
+        currentStage = s;
+    });
+    public Event<Stage> onRemove = new Event<>();
 }
