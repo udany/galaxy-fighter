@@ -14,7 +14,7 @@ public class SingleWeapon extends BaseWeapon {
     public SingleWeapon() {
         cadence = .1;
         shootSound = new SoundEffectPool("/sound/sfx/Shoot_01.wav");
-        shootSound.setVolume(.25);
+        shootSound.setVolume(.15);
     }
 
     public void fire(Stage game, BaseShip ship) {
