@@ -7,6 +7,7 @@ import engine.main.QuadTree;
 import engine.main.Stage;
 import engine.util.Event;
 import engine.util.MyFrame;
+import engine.window.Transition.Transition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public abstract class Game extends MyFrame {
     protected Keyboard keyboard = Keyboard.getInstance();
 
     public Event<Graphics2D> onPaint = new Event<>();
-    public Event<Long> onUpdate = new Event<>();
+    public Event<Double> onUpdate = new Event<>();
 
     public Game(int w, int h){
         super();
@@ -40,9 +41,6 @@ public abstract class Game extends MyFrame {
         setSize(size.width, size.height);
         setResizable(false);
         centerOnScreen();
-
-        onPaint.addListener(this::draw);
-        onUpdate.addListener(this::update);
 
         // Create canvas for painting...
         canvas = new Canvas();
@@ -108,7 +106,8 @@ public abstract class Game extends MyFrame {
 
                     // clear back buffer...
                     g2d = bufferImage.createGraphics();
-                    onUpdate.emit(elapsed);
+                    update(elapsed);
+                    draw(g2d);
                     onPaint.emit(g2d);
                     g2d.dispose();
 
@@ -147,6 +146,10 @@ public abstract class Game extends MyFrame {
             stage.draw(graphics);
         }
 
+        if (currentTransition != null) {
+            currentTransition.draw(graphics);
+        }
+
         if (debug) {
             graphics.setFont( new Font( "Courier New", Font.PLAIN, 12 ) );
             graphics.setColor( Color.GREEN );
@@ -168,8 +171,22 @@ public abstract class Game extends MyFrame {
         for (Stage stage : stages) {
             stage.update(elapsedMs);
         }
+
+        onUpdate.emit(((double)elapsedMs) / 1000);
     }
 
+    Transition currentTransition;
+    public void transition(Transition t) {
+        currentTransition = t;
+        if (t == null) return;
+
+        t.onEnd.addListener(x -> {
+            if (currentTransition != null)
+            transition(currentTransition.next());
+        });
+
+        currentTransition.start();
+    }
 
     public void addObject(GameObject obj) {
         baseStage.addObject(obj);
