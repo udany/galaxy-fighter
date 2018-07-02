@@ -1,16 +1,22 @@
 package engine.main;
 
+import GalaxyFighter.objects.menu.TitleScreen;
 import engine.base.Size;
+import engine.graphics.Color;
 import engine.input.Keyboard;
 import engine.util.Event;
 import engine.window.Game;
+import engine.window.Transition.FadeIn;
+import engine.window.Transition.FadeOut;
+import engine.window.Transition.Transition;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Stage {
@@ -35,6 +41,7 @@ public class Stage {
         bindToKeyboard();
         unpause();
     });
+
     public Event<Game> onRemove = new Event<Game>().addListener(g -> {
         game = null;
         unbindToKeyboard();
@@ -49,6 +56,10 @@ public class Stage {
 
         kb.onKeyDown.addListener(key -> {
             onKeyDown.emit(key);
+
+            if (key == KeyEvent.VK_F11) {
+                if (paused) { unpause(); } else { pause(); }
+            }
         }, id.toString());
 
         kb.onKeyUp.addListener(key -> {
@@ -97,22 +108,32 @@ public class Stage {
         objectsToAdd.add(obj);
     }
 
+    public List<GameObject> getObjectList() {
+        return objectList;
+    }
+    public List<GameObject> getObjectList(Predicate<GameObject> test) {
+        return objectList.stream().filter(test).collect(Collectors.toList());
+    }
+
     public void update(long elapsedMs){
         if (paused) return;
 
-        List<GameObject> objectsToRemove = objectList.stream().filter(GameObject::isDestroyed).collect(Collectors.toList());
+        /// Remove Objects
+        List<GameObject> objectsToRemove = getObjectList(GameObject::isDestroyed);
         objectList.removeAll(objectsToRemove);
         objectsToRemove.forEach(obj -> obj.onRemove.emit(this));
 
+        // Remove Solid Objects from tree
         objectsToRemove = objectsToRemove.stream().filter(GameObject::isSolid).collect(Collectors.toList());
         tree.removeAll(objectsToRemove);
 
+        // Add Objects
         objectList.addAll(objectsToAdd);
         tree.insertAll(objectsToAdd.stream().filter(GameObject::isSolid).collect(Collectors.toList()));
         objectsToAdd.forEach(obj -> obj.onAdd.emit(this));
         objectsToAdd.clear();
 
-
+        // Update Objects
         List<GameObject> list = new ArrayList<>();
         list.addAll(objectList);
         for(GameObject o : list){
@@ -144,5 +165,25 @@ public class Stage {
                 }
             }
         }
+    }
+
+    protected boolean transitioning = false;
+    public void transitionTo(Stage to) {
+        FadeOut fadeOut = new FadeOut(new engine.graphics.Color(0,0,0), .5, game);
+        FadeIn fadeIn = new FadeIn(new Color(0,0,0), .5, game);
+        fadeOut.chain(fadeIn);
+
+        transitionTo(to, fadeOut);
+    }
+    public void transitionTo(Stage to, Transition transition) {
+        transition.onEnd.addListener(x -> {
+            game.removeStage(this);
+            game.addStage(to);
+
+            transitioning = false;
+        });
+
+        transitioning = true;
+        game.transition(transition);
     }
 }
