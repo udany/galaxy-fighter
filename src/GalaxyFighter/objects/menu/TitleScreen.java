@@ -16,6 +16,7 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class TitleScreen extends Stage {
+    static Music bgm = new Music("/sound/music/01_Interstellar.mp3");
 
     public TitleScreen() {
         Menu menu = new Menu(Arrays.asList(
@@ -30,9 +31,11 @@ public class TitleScreen extends Stage {
 
         addObject(menu);
 
-        Music bgm = new Music("/sound/music/01_Interstellar.mp3");
         bgm.setVolume(.05);
-        bgm.start();
+
+        onAdd.addListener(x -> {
+            bgm.start();
+        });
 
         onAdd.addListener(x -> {
             FadeIn fadeIn = new FadeIn(new Color(0,0,0), 2, game);

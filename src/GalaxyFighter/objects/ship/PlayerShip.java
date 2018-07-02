@@ -7,6 +7,7 @@ import engine.graphics.Color;
 import engine.graphics.Sprite;
 import engine.input.Keyboard;
 import engine.sound.SoundEffect;
+import engine.util.Event;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,7 +24,6 @@ abstract public class PlayerShip extends BaseShip {
         hp.setBackground(new Color(0, 0, 0, 120));
 
         checkForCollisions = true;
-        debug = true;
 
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
@@ -78,6 +78,7 @@ abstract public class PlayerShip extends BaseShip {
         }
     }
 
+    public Event onDeath = new Event();
     public boolean immune = false;
     protected void hit(EnemyBullet bullet) {
         if (bullet.isExploding()) return;
@@ -90,6 +91,7 @@ abstract public class PlayerShip extends BaseShip {
             explosionSound.start();
             currentSprite = explosion;
             explosion.onAnimationEnd.addListener(o -> {
+                onDeath.emit();
                 this.destroy();
             });
 
