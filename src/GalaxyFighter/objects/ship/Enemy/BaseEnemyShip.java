@@ -25,8 +25,6 @@ public class BaseEnemyShip extends BaseShip {
     Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setOrigin(-4,0);
 
     public BaseEnemyShip(){
-        hp = new HP(10);
-
         weapon = new SingleWeapon();
 
         baseAcceleration = 2000;
@@ -49,11 +47,13 @@ public class BaseEnemyShip extends BaseShip {
 
         weapon = new EnemySingleWeapon();
 
-
+        onAdd.addListener(stage -> {
+            hp = new HP(10, currentStage.getGame());
+        });
     }
 
     protected long timeLastHit = 0;
-    protected int drawHpInterval = 500;
+    protected int drawHpInterval = 1000;
     public void hit(PlayerBullet bullet) {
         if (bullet.isExploding()) return;
         if (immune) return;
@@ -63,7 +63,7 @@ public class BaseEnemyShip extends BaseShip {
         hp.add(-bullet.damage);
         timeLastHit = currentStage.getGameTime();
 
-        if (hp.current > 0) {
+        if (hp.getCurrent() > 0) {
             damageSound.get().start();
             return;
         }
@@ -101,7 +101,7 @@ public class BaseEnemyShip extends BaseShip {
     @Override
     public void draw(Graphics2D graphics) {
         long elapsedSinceLastHit = currentStage.getGameTime()  - timeLastHit;
-        if  (elapsedSinceLastHit <= drawHpInterval && hp.current > 0) {
+        if  (elapsedSinceLastHit <= drawHpInterval) {
             hp.draw(graphics, position.clone().add(5, -10), 1 - ((double)elapsedSinceLastHit/drawHpInterval));
         }
 

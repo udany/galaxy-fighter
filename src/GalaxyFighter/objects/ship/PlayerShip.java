@@ -12,6 +12,7 @@ import engine.util.Event;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.util.Arrays;
 
 abstract public class PlayerShip extends BaseShip {
 
@@ -22,10 +23,6 @@ abstract public class PlayerShip extends BaseShip {
     protected Sprite hpOverlay = new Sprite(40,150, "/images/left_hbar.png");
 
     public PlayerShip() {
-        hp = new HP(20);
-        hp.size.set(104, 20);
-        hp.setBackground(new Color(0, 0, 0, 0));
-        hp.setBackground(new Color(0, 0, 0, 0));
 
         checkForCollisions = true;
 
@@ -69,6 +66,21 @@ abstract public class PlayerShip extends BaseShip {
                 hit((EnemyBullet) obj);
             }
         });
+
+        onAdd.addListener(stage -> {
+            setupHp();
+        });
+    }
+
+    private void setupHp() {
+        hp = new HP(20, currentStage.getGame());
+        hp.size.set(105, 20);
+        hp.setBackground(new Color(0, 0, 0, 0));
+        hp.setBorder(new Color(0, 0, 0, 0));
+        hp.setColors(Arrays.asList(
+                new Color(255, 0, 0, 100),
+                new Color(0, 255, 0, 100)
+        ));
     }
 
     private void movementKeyDown(int key) {
@@ -93,7 +105,7 @@ abstract public class PlayerShip extends BaseShip {
 
         damageSound.start();
 
-        if (hp.current == 0) {
+        if (hp.getCurrent() == 0) {
             explosionSound.start();
             currentSprite = explosion;
             explosion.onAnimationEnd.addListener(o -> {
@@ -108,7 +120,7 @@ abstract public class PlayerShip extends BaseShip {
 
     protected int maxRotation = 5;
     protected Vector hpBarOverlayPosition = new Vector(0, 570);
-    protected Vector hpBarPosition = hpBarOverlayPosition.clone().add(9, 126);
+    protected Vector hpBarPosition = hpBarOverlayPosition.clone().add(9, 128);
 
     @Override
     public void draw(Graphics2D graphics) {
