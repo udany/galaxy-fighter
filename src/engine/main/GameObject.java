@@ -131,7 +131,7 @@ public abstract class GameObject implements IObject {
         onDestroy.emit();
     }
 
-    Stage currentStage;
+    protected Stage currentStage;
 
     public Event<Stage> onAdd = new Event<Stage>().addListener(s -> {
         currentStage = s;
