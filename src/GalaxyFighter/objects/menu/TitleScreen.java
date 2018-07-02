@@ -3,8 +3,7 @@ package GalaxyFighter.objects.menu;
 import engine.base.Vector;
 import engine.graphics.Sprite;
 import engine.main.Stage;
-import engine.sound.SoundEffect;
-import engine.window.Game;
+import engine.sound.Music;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -13,23 +12,24 @@ public class TitleScreen extends Stage {
 
     public TitleScreen() {
 
-        SoundEffect shootSound = new SoundEffect("/sound/sfx/Shoot_01.wav");
 
         Menu menu = new Menu(Arrays.asList(
                 new MenuOption("Choose Your Ship:"),
                 new MenuOption("Bombardier", ()->{
-                    shootSound.start();
                 }),
                 new MenuOption("Edgeliner", ()->{
-                    shootSound.start();
                 })
         )).setFont("/fonts/pixelmix.ttf", 35);
 
         addObject(menu);
 
-        //Music bgm = new Music("/sound/music/01_Interstellar.mp3");
-        //bgm.setVolume(.3);
-        //bgm.start();
+        Music bgm = new Music("/sound/music/01_Interstellar.mp3");
+        bgm.setVolume(.05);
+        bgm.start();
+
+        onRemove.addListener(x -> {
+            bgm.stop();
+        });
     }
 
     Sprite titleSprite = new Sprite(573, 189, "/images/Title.png");

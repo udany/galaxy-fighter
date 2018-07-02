@@ -3,6 +3,7 @@ package GalaxyFighter.objects.menu;
 import engine.input.Keyboard;
 import engine.main.GameObject;
 import engine.resources.ResourceLoader;
+import engine.sound.SoundEffect;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -22,6 +23,9 @@ public class Menu extends GameObject {
     double blinkTimeElapsed = 0;
     boolean isBlinking = false;
 
+    SoundEffect select = new SoundEffect("/sound/sfx/Select.wav").setVolume(.1);
+    SoundEffect success = new SoundEffect("/sound/sfx/Success.wav").setVolume(.25);
+
     public Menu(List<MenuOption> items) {
         super();
 
@@ -34,10 +38,13 @@ public class Menu extends GameObject {
             currentStage.onKeyDown.addListener(key -> {
                 if (key == KeyEvent.VK_DOWN) {
                     move(1);
+                    select.start();
                 } else if (key == KeyEvent.VK_UP) {
                     move(-1);
+                    select.start();
                 } else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
                     select();
+                    success.start();
                 }
             }, id.toString());
         });
