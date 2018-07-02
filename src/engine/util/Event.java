@@ -41,7 +41,7 @@ public class Event<T extends Object> {
 
     public void removeListener(String key){
         int idx = keys.indexOf(key);
-        if (idx == -1){
+        if (idx != -1){
             listeners.remove(idx);
             keys.remove(idx);
         }
@@ -52,7 +52,10 @@ public class Event<T extends Object> {
     }
 
     public void emit(T data){
-        for(Consumer<T> listener : listeners){
+        List<Consumer<T>> l = new ArrayList<>();
+        l.addAll(listeners);
+
+        for(Consumer<T> listener : l){
             listener.accept(data);
         }
     }
