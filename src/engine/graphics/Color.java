@@ -39,7 +39,8 @@ public class Color extends java.awt.Color {
         float red = (float)Math.abs((ratio * to.getRed()) + ((1 - ratio) * from.getRed()));
         float green = (float)Math.abs((ratio * to.getGreen()) + ((1 - ratio) * from.getGreen()));
         float blue = (float)Math.abs((ratio * to.getBlue()) + ((1 - ratio) * from.getBlue()));
+        float alpha = (float)Math.abs((ratio * to.getAlpha()) + ((1 - ratio) * from.getAlpha()));
 
-        return new Color(red/255, green/255, blue/255);
+        return new Color(red/255, green/255, blue/255, alpha/255);
     }
 }
