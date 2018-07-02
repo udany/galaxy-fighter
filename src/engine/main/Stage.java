@@ -29,6 +29,8 @@ public class Stage {
         game = g;
         this.size = game.size;
 
+        tree = new QuadTree(size.width, size.height);
+
         bindToKeyboard();
         unpause();
     });
@@ -37,7 +39,6 @@ public class Stage {
         unbindToKeyboard();
         pause();
     });
-
 
     public Event<Integer> onKeyDown = new Event<>();
     public Event<Integer> onKeyUp = new Event<>();
@@ -63,10 +64,6 @@ public class Stage {
 
     private QuadTree tree;
     private List<GameObject> objectList;
-
-    public void start() {
-        tree = new QuadTree(size.width, size.height);
-    }
 
     protected boolean paused = false;
     public Stage pause() {

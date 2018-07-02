@@ -56,8 +56,7 @@ public abstract class Game extends MyFrame {
 
         // Setup a base stage
         baseStage = new Stage();
-        baseStage.start();
-        stages.add(baseStage);
+        addStage(baseStage);
     }
 
     protected int frameRate = 120;
