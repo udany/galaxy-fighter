@@ -55,6 +55,7 @@ public class Stage {
         Keyboard kb = Keyboard.getInstance();
 
         kb.onKeyDown.addListener(key -> {
+            if (transitioning) return;
             onKeyDown.emit(key);
 
             if (key == KeyEvent.VK_F11) {
@@ -63,6 +64,7 @@ public class Stage {
         }, id.toString());
 
         kb.onKeyUp.addListener(key -> {
+            if (transitioning) return;
             onKeyUp.emit(key);
         }, id.toString());
     }
