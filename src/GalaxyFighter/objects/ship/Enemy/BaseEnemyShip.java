@@ -12,10 +12,12 @@ import engine.sound.SoundEffectPool;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class BaseEnemyShip extends BaseShip {
 
     protected boolean immune = false;
+
 
     static SoundEffectPool damageSound = new SoundEffectPool("/sound/sfx/Damage_01.wav").setVolume(.1);
     static SoundEffectPool explosionSound = new SoundEffectPool("/sound/sfx/Explosion_01.wav").setVolume(.5);
@@ -47,11 +49,7 @@ public class BaseEnemyShip extends BaseShip {
 
         weapon = new EnemySingleWeapon();
 
-        Keyboard.getInstance().onKeyDown.addListener(key -> {
-            if (key == KeyEvent.VK_B) {
-                shoot();
-            }
-        });
+
     }
 
     protected long timeLastHit = 0;
@@ -75,6 +73,29 @@ public class BaseEnemyShip extends BaseShip {
         explosion.onAnimationEnd.addListener(o -> this.destroy());
 
         immune = true;
+    }
+
+    protected double timetoSinceLastShoot=0;
+    protected double timeMinShoot=2;
+    protected double timeMaxShoot=5;
+    protected double timetoNextShoot=0;
+    Random random = new Random();
+
+    @Override
+    public void update(double secondsElapsed) {
+        if (timetoNextShoot==0){
+           timetoNextShoot=timeMinShoot+random.nextDouble()*(timeMaxShoot-timeMinShoot);
+        }
+
+        super.update(secondsElapsed);
+        timetoSinceLastShoot+=secondsElapsed;
+        if (timetoSinceLastShoot>=timetoNextShoot){
+            shoot();
+            timetoSinceLastShoot=0;
+            timetoNextShoot=0;
+        }
+
+
     }
 
     @Override
