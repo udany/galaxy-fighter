@@ -14,11 +14,12 @@ public class Event<T extends Object> {
         keys = new ArrayList<>();
     }
 
-    public void addListener(Consumer<T> listener){
+    public Event addListener(Consumer<T> listener){
         addListener(listener, "");
+        return this;
     }
 
-    public void addListener(Consumer<T> listener, String key){
+    public Event addListener(Consumer<T> listener, String key){
         int idx = listeners.indexOf(listener);
         if (idx == -1){
             listeners.add(listener);
@@ -26,6 +27,8 @@ public class Event<T extends Object> {
         }else{
             listeners.set(idx, listener);
         }
+
+        return this;
     }
 
     public void removeListener(Consumer<T> listener){
