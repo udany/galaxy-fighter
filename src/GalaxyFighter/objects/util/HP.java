@@ -6,11 +6,16 @@ import engine.base.Vector;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import engine.graphics.Color;
 
 public class HP {
     Color borderColor = new Color(255, 255, 255, 120);
     Color backgroundColor = new Color(0, 0, 0, 120);
-    List<Color> mainColors = Arrays.asList(Color.red, Color.green);
+    List<Color> mainColors = Arrays.asList(
+            new Color(255, 0, 0, 0),
+            new Color(0,255, 0, 0)
+    );
+
     Size size = new Size(32,4);
 
     public int current = 0;
@@ -55,15 +60,15 @@ public class HP {
 
         Rectangle box = new Rectangle((int) position.x, (int) position.y, size.width, size.height);
 
-        graphics.setColor(setAlpha(backgroundColor, alpha));
+        graphics.setColor(backgroundColor.scaleAlpha(alpha));
         graphics.fill(box);
 
-        graphics.setColor(setAlpha(borderColor, alpha));
+        graphics.setColor(borderColor.scaleAlpha(alpha));
         graphics.draw(box);
 
         box = new Rectangle((int) position.x+1, (int) position.y+1, (int) ((size.width-1)*ratio), size.height-1);
 
-        graphics.setColor(setAlpha(getColor(ratio), alpha));
+        graphics.setColor(getColor(ratio).scaleAlpha(alpha));
         graphics.fill(box);
     }
 
@@ -75,22 +80,10 @@ public class HP {
                 ratio -= l*colorLength;
                 ratio = ratio / colorLength;
 
-                return transition(mainColors.get(l), mainColors.get(l+1), ratio);
+                return Color.transition(mainColors.get(l), mainColors.get(l+1), ratio);
             }
         }
 
         return mainColors.get(mainColors.size()-1);
-    }
-
-    protected Color transition(Color from, Color to, double ratio) {
-        float red = (float)Math.abs((ratio * to.getRed()) + ((1 - ratio) * from.getRed()));
-        float green = (float)Math.abs((ratio * to.getGreen()) + ((1 - ratio) * from.getGreen()));
-        float blue = (float)Math.abs((ratio * to.getBlue()) + ((1 - ratio) * from.getBlue()));
-
-        return new Color(red/255, green/255, blue/255);
-    }
-
-    protected Color setAlpha(Color c, double alpha) {
-        return new Color(c.getRed(), c.getGreen(), c.getBlue(), (int) (c.getAlpha() * alpha));
     }
 }
