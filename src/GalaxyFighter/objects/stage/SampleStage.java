@@ -29,10 +29,11 @@ public class SampleStage extends Stage {
         });
 
         BaseShip ship;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 1; j++) {
+
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < (10 - j); i++) {
                 ship = new BaseEnemyShip();
-                ship.setPosition((128 * i) +40, (j * 72) + 15);
+                ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
                 addObject(ship);
             }
         }
@@ -43,15 +44,15 @@ public class SampleStage extends Stage {
     }
 
     public void returnToTitle() {
-        FadeOut fadeOut = new FadeOut(new Color(0,0,0), .5, game);
-        FadeIn fadeIn = new FadeIn(new Color(0,0,0), .5, game);
-        fadeOut.chain(fadeIn);
+        transitionTo(new TitleScreen());
+    }
 
-        fadeOut.onEnd.addListener(x -> {
-            game.removeStage(this);
-            game.addStage(new TitleScreen());
-        });
+    @Override
+    public void update(long elapsedMs) {
+        super.update(elapsedMs);
 
-        game.transition(fadeOut);
+        if (!transitioning && getObjectList(x -> x instanceof BaseEnemyShip).size() == 0) {
+            returnToTitle();
+        }
     }
 }

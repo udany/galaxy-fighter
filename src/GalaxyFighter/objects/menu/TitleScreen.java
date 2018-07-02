@@ -51,16 +51,7 @@ public class TitleScreen extends Stage {
     Vector titlePosition = new Vector(360, 100);
 
     protected void gameStart(PlayerShip player) {
-        FadeOut fadeOut = new FadeOut(new Color(0,0,0), .5, game);
-        FadeIn fadeIn = new FadeIn(new Color(0,0,0), .5, game);
-        fadeOut.chain(fadeIn);
-
-        fadeOut.onEnd.addListener(x -> {
-            game.removeStage(this);
-            game.addStage(new SampleStage(player));
-        });
-
-        game.transition(fadeOut);
+        transitionTo(new SampleStage(player));
     }
 
     @Override
