@@ -2,14 +2,9 @@ package GalaxyFighter.objects.ship;
 
 import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.weapons.BaseWeapon;
-import engine.graphics.Palette;
 import engine.graphics.Sprite;
-import engine.input.Keyboard;
 import engine.main.MotionObject;
-import engine.main.Stage;
-import engine.window.Game;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +16,11 @@ abstract public class BaseShip extends MotionObject {
     protected double maxSpeed = 3;
     protected double brakeRatio = 1;
 
-    protected Stage game;
     protected BaseWeapon weapon;
     protected boolean shouldFire;
     protected double timeSinceLastShot = -1;
 
-    public BaseShip(Stage game) {
-        this.game = game;
+    public BaseShip() {
     }
 
     protected List<Integer> keys = new ArrayList<>();
@@ -95,15 +88,15 @@ abstract public class BaseShip extends MotionObject {
         if (position.x <= 0) {
             position.x = 0;
         }
-        if (position.x + size.width >= game.size.width) {
-            position.x = game.size.width - size.width;
+        if (position.x + size.width >= currentStage.size.width) {
+            position.x = currentStage.size.width - size.width;
         }
 
         if (position.y <= 0) {
             position.y = 0;
         }
-        if (position.y + size.height >= game.size.height) {
-            position.y = game.size.height - size.height;
+        if (position.y + size.height >= currentStage.size.height) {
+            position.y = currentStage.size.height - size.height;
         }
 
 
@@ -120,7 +113,7 @@ abstract public class BaseShip extends MotionObject {
 
     public void shoot() {
         if (weapon != null) {
-            weapon.fire(game, this);
+            weapon.fire(currentStage, this);
         }
     }
 }

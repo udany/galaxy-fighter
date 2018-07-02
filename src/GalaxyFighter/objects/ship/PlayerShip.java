@@ -1,22 +1,13 @@
 package GalaxyFighter.objects.ship;
 
-import GalaxyFighter.objects.weapons.BaseWeapon;
 import engine.base.Vector;
-import engine.graphics.Sprite;
 import engine.input.Keyboard;
-import engine.main.MotionObject;
-import engine.main.Stage;
-import engine.window.Game;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 abstract public class PlayerShip extends BaseShip {
-    public PlayerShip(Stage game) {
-        super(game);
-
+    public PlayerShip() {
         /// KeyEvents
         Keyboard kb = Keyboard.getInstance();
         kb.onKeyDown.addListener(code -> {

@@ -5,10 +5,8 @@ import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Sprite;
-import engine.main.Stage;
 import engine.sound.SoundEffect;
 import engine.sound.SoundEffectPool;
-import engine.window.Game;
 
 import java.awt.*;
 
@@ -21,9 +19,7 @@ public class BaseEnemyShip extends BaseShip {
 
     Sprite explosion = new Sprite(32,32, "/images/Explosion.png").setFramesPerFrame(5).setOrigin(-4,0);
 
-    public BaseEnemyShip(Stage game){
-        super(game);
-
+    public BaseEnemyShip(){
         hp = new HP(10);
 
         weapon = new SingleWeapon();
@@ -55,7 +51,7 @@ public class BaseEnemyShip extends BaseShip {
         bullet.explode();
 
         hp.add(-bullet.damage);
-        timeLastHit = game.getGameTime();
+        timeLastHit = currentStage.getGameTime();
 
         if (hp.current > 0) {
             damageSound.get().start();
@@ -73,7 +69,7 @@ public class BaseEnemyShip extends BaseShip {
 
     @Override
     public void draw(Graphics2D graphics) {
-        long elapsedSinceLastHit =game.getGameTime()  - timeLastHit;
+        long elapsedSinceLastHit = currentStage.getGameTime()  - timeLastHit;
         if  (elapsedSinceLastHit <= drawHpInterval && hp.current > 0) {
             hp.draw(graphics, position.clone().add(5, -10), 1 - ((double)elapsedSinceLastHit/drawHpInterval));
         }
