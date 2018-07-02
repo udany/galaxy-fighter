@@ -134,8 +134,10 @@ public abstract class Game extends MyFrame {
 
     Stage baseStage;
     protected List<Stage> stages = new ArrayList<>();
-    public void addStage(Stage s) { stages.add(s); }
-    public void removeStage(Stage s) { stages.remove(s); }
+    protected List<Stage> stagesToAdd = new ArrayList<>();
+    protected List<Stage> stagesToRemove = new ArrayList<>();
+    public void addStage(Stage s) { stagesToAdd.add(s); }
+    public void removeStage(Stage s) { stagesToRemove.add(s); }
 
     protected void draw(Graphics2D graphics){
         graphics.setColor( background );
@@ -156,6 +158,14 @@ public abstract class Game extends MyFrame {
     }
 
     protected void update(long elapsedMs){
+        stages.addAll(stagesToAdd);
+        stagesToAdd.forEach(stage -> stage.onAdd.emit(this));
+        stagesToAdd.clear();
+
+        stages.removeAll(stagesToRemove);
+        stagesToRemove.forEach(stage -> stage.onRemove.emit(this));
+        stagesToRemove.clear();
+
         for (Stage stage : stages) {
             stage.update(elapsedMs);
         }

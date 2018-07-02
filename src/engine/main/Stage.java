@@ -1,6 +1,7 @@
 package engine.main;
 
 import engine.base.Size;
+import engine.input.Keyboard;
 import engine.util.Event;
 import engine.window.Game;
 
@@ -8,15 +9,16 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Stage {
-    public Stage(Game game) {
-        this.game = game;
+    public Stage() {
         this.size = game.size;
         objectList = new ArrayList<>();
     }
 
+    protected UUID id = UUID.randomUUID();
     protected Game game;
     public Game getGame() { return game; }
     public long getGameTime() { return game.getGameTime(); }
@@ -24,6 +26,40 @@ public class Stage {
     public Size size;
     public Event<Graphics2D> onPaint = new Event<>();
     public Event<Long> onUpdate = new Event<>();
+    public Event<Game> onAdd = new Event<Game>().addListener(g -> {
+        game = g;
+        bindToKeyboard();
+        unpause();
+    });
+    public Event<Game> onRemove = new Event<Game>().addListener(g -> {
+        game = null;
+        unbindToKeyboard();
+        pause();
+    });
+
+
+    public Event<Integer> onKeyDown = new Event<>();
+    public Event<Integer> onKeyUp = new Event<>();
+
+    protected void bindToKeyboard() {
+        Keyboard kb = Keyboard.getInstance();
+
+        kb.onKeyDown.addListener(key -> {
+            onKeyDown.emit(key);
+        }, id.toString());
+
+        kb.onKeyUp.addListener(key -> {
+            onKeyUp.emit(key);
+        }, id.toString());
+    }
+
+    protected void unbindToKeyboard() {
+        Keyboard kb = Keyboard.getInstance();
+
+        kb.onKeyDown.removeListener(id.toString());
+        kb.onKeyUp.removeListener(id.toString());
+    }
+
     private QuadTree tree;
     private List<GameObject> objectList;
 
@@ -32,11 +68,13 @@ public class Stage {
     }
 
     protected boolean paused = false;
-    public void pause() {
+    public Stage pause() {
         paused = true;
+        return this;
     }
-    public void unpause() {
+    public Stage unpause() {
         paused = false;
+        return this;
     }
 
     public void draw(Graphics2D graphics){
