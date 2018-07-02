@@ -4,7 +4,9 @@ import engine.sound.SoundData;
 import engine.util.FileLogger;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -58,6 +60,15 @@ public class ResourceLoader {
     public static SoundData loadSound(String file) {
         return loadWithCache(soundCache, file, fileName -> {
             return new SoundData(file);
+        });
+    }
+
+    private static HashMap<String, Font> fontCache = new HashMap<>();
+    public static Font loadFont(String file) {
+        return loadWithCache(fontCache, file, fileName -> {
+            URL url = getResourceUrl(fileName);
+
+            return Font.createFont(Font.TRUETYPE_FONT, url.openStream());
         });
     }
 }
