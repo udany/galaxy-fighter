@@ -178,10 +178,12 @@ public class Stage {
     }
     public void transitionTo(Stage to, Transition transition) {
         transition.onEnd.addListener(x -> {
-            game.removeStage(this);
-            game.addStage(to);
+            if (game != null) {
+                game.removeStage(this);
+                game.addStage(to);
 
-            transitioning = false;
+                transitioning = false;
+            }
         });
 
         transitioning = true;

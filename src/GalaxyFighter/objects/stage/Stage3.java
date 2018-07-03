@@ -1,17 +1,13 @@
 package GalaxyFighter.objects.stage;
 
-import GalaxyFighter.objects.menu.TitleScreen;
-import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.BaseShip;
-import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import GalaxyFighter.objects.ship.Enemy.Enemy02;
+import GalaxyFighter.objects.ship.Enemy.Enemy03;
 import GalaxyFighter.objects.ship.PlayerShip;
 import engine.sound.Music;
 
-import java.awt.*;
-
-public class Stage2 extends GalaxyStage {
-    public Stage2(PlayerShip p) {
+public class Stage3 extends GalaxyStage {
+    public Stage3(PlayerShip p) {
         super(p);
 
         bgm = new Music("/sound/music/02_Fire_darer.mp3");
@@ -20,10 +16,10 @@ public class Stage2 extends GalaxyStage {
         onAdd.addListener(x -> {
             BaseShip ship;
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 2; j++) {
                 for (int i = 0; i < (10 - j); i++) {
-                    ship = new Enemy02();
-                    ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
+                    ship = new Enemy03();
+                    ship.setPosition((120 * i) + (70 * j) + 45, 100 + (j * 100));
                     addObject(ship);
                 }
             }
@@ -34,6 +30,6 @@ public class Stage2 extends GalaxyStage {
     }
 
     public void nextStage() {
-        transitionTo(new Stage3(player));
+        returnToTitle();
     }
 }

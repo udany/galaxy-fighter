@@ -50,7 +50,6 @@ public class BaseEnemyShip extends BaseShip {
 
     protected long timeLastHit = 0;
     protected int drawHpInterval = 1000;
-
     protected void setHp(){
         hp = new HP(5, currentStage.getGame());
     }
