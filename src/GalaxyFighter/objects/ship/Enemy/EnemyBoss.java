@@ -14,21 +14,26 @@ public class EnemyBoss extends BaseEnemyShip {
 
 
         weapon = new BossWeapon();
-        timeMinShoot = 0.5;
-        timeMaxShoot = 1;
+        timeMinShoot = 0.1;
+        timeMaxShoot = 0.7;
 
         size.set(264, 88);
         currentSprite = new Sprite(264, 88, "/images/Boss.png");
         currentSprite.setState(0);
 
         motions = Arrays.asList(
-                new EnemyMotion(new Vector(-150, 0), 2),
+                new EnemyMotion(new Vector(-150, 0), 1),
                 new EnemyMotion(new Vector(0, 150), 1.5),
                 new EnemyMotion(new Vector(0, -150), 1.5),
-                new EnemyMotion(new Vector(150, 0), 4),
+                new EnemyMotion(new Vector(150, 0), 1),
                 new EnemyMotion(new Vector(0, 150), 1.5),
                 new EnemyMotion(new Vector(0, -150), 1.5),
-                new EnemyMotion(new Vector(-150, 0), 2)
+                new EnemyMotion(new Vector(150, 0), 1),
+                new EnemyMotion(new Vector(0, 150), 1.5),
+                new EnemyMotion(new Vector(0, -150), 1.5),
+                new EnemyMotion(new Vector(-150, 0), 1),
+                new EnemyMotion(new Vector(0, 150), 1.5),
+                new EnemyMotion(new Vector(0, -150), 1.5)
 
         );
 
@@ -38,28 +43,12 @@ public class EnemyBoss extends BaseEnemyShip {
     public void update(double secondsElapsed) {
         super.update(secondsElapsed);
 
-        if (timetoNextShoot == 0) {
-            timetoNextShoot = timeMinShoot + random.nextDouble() * (timeMaxShoot - timeMinShoot);
-        }
-
-        super.update(secondsElapsed);
-        timetoSinceLastShoot += secondsElapsed;
-
-        if (timetoSinceLastShoot >= timetoNextShoot) {
-            shoot();
-            timetoSinceLastShoot = 0;
-            timetoNextShoot = 0;
-
-        }
-
-        timeAlive += secondsElapsed;
-
-        updateMotion(secondsElapsed);
+        timeLastHit = currentStage.getGameTime();
     }
 
     @Override
     protected void setHp() {
         hp = new HP(500, currentStage.getGame());
-        hp.size = new Size(100,8);
+        hp.size = new Size(250,8);
     }
 }
