@@ -49,10 +49,8 @@ public class Music {
     }
 
     public void start(){
-        if (mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
-            mediaPlayer.seek(new Duration(0));
-            mediaPlayer.play();
-        }
+        mediaPlayer.seek(new Duration(0));
+        mediaPlayer.play();
     }
 
     public void stop(){
