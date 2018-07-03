@@ -19,6 +19,8 @@ public class Music {
     }
 
 
+    private boolean loop = false;
+    private Music next;
     public Music(String file){
         startup();
 
@@ -27,9 +29,19 @@ public class Music {
         try{
             media = new Media(url.toString());
             mediaPlayer = new MediaPlayer(media);
+
+            mediaPlayer.setOnEndOfMedia(() -> {
+                if (loop) start();
+                if (next != null) next.start();
+            });
         }catch (Exception e){
             System.out.println("Failed loading sound "+url);
         }
+    }
+
+    public Music loop() {
+        loop = true;
+        return this;
     }
 
     public void start(){

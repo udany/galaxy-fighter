@@ -14,7 +14,7 @@ public class Stage2 extends GalaxyStage {
     public Stage2(PlayerShip p) {
         super(p);
 
-        bgm = new Music("/sound/music/02_Fire_darer.mp3");
+        bgm = new Music("/sound/music/03_Field_force.mp3");
         bgm.setVolume(.15);
 
         onAdd.addListener(x -> {
