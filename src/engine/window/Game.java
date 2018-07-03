@@ -1,9 +1,9 @@
 package engine.window;
 
 import engine.base.Size;
+import engine.input.Controller;
 import engine.input.Keyboard;
 import engine.main.GameObject;
-import engine.main.QuadTree;
 import engine.main.Stage;
 import engine.util.Event;
 import engine.util.MyFrame;
@@ -16,7 +16,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class Game extends MyFrame {
     public Size size = new Size();
@@ -82,6 +81,8 @@ public abstract class Game extends MyFrame {
         bufferImage = gc.createCompatibleImage( size.width, size.height);
 
         msPerFrame = 1000/frameRate;
+
+        Controller.setup();
     }
 
     long gameTime;
