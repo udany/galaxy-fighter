@@ -1,17 +1,13 @@
 package GalaxyFighter.objects.ship.Enemy;
 
-import GalaxyFighter.objects.bullets.BaseBullet;
 import GalaxyFighter.objects.bullets.PlayerBullet;
 import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.weapons.SingleWeapon;
 import engine.graphics.Sprite;
-import engine.input.Keyboard;
-import engine.sound.SoundEffect;
 import engine.sound.SoundEffectPool;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class BaseEnemyShip extends BaseShip {

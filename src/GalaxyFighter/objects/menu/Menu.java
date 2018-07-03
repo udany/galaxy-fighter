@@ -1,12 +1,11 @@
 package GalaxyFighter.objects.menu;
 
-import engine.input.Keyboard;
+import engine.input.GenericInput;
 import engine.main.GameObject;
 import engine.resources.ResourceLoader;
 import engine.sound.SoundEffect;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
 
@@ -32,17 +31,16 @@ public class Menu extends GameObject {
         this.options = items;
         move(1);
 
-        Keyboard kb = Keyboard.getInstance();
 
-        onAdd.addListener((stage) -> {
-            currentStage.onKeyDown.addListener(key -> {
-                if (key == KeyEvent.VK_DOWN) {
+        onAdd.addListener(stage -> {
+            stage.onButtonDown.addListener(key -> {
+                if (key == GenericInput.Button.Down) {
                     move(1);
                     select.start();
-                } else if (key == KeyEvent.VK_UP) {
+                } else if (key == GenericInput.Button.Up) {
                     move(-1);
                     select.start();
-                } else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
+                } else if (key == GenericInput.Button.Start || key == GenericInput.Button.A) {
                     select();
                     success.start();
                 }
