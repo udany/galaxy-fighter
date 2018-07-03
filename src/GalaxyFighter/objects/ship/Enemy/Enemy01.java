@@ -20,7 +20,7 @@ public class Enemy01 extends BaseEnemyShip {
     @Override
     protected void setHp() {
 
-        hp = new HP(10, currentStage.getGame());
+        hp = new HP(5, currentStage.getGame());
 
     }
 }
