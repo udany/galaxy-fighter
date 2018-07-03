@@ -3,6 +3,7 @@ package GalaxyFighter.objects.stage;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.Enemy01;
 import GalaxyFighter.objects.ship.Enemy.Enemy03;
+import GalaxyFighter.objects.ship.Enemy.EnemyBoss;
 import GalaxyFighter.objects.ship.PlayerShip;
 
 import engine.sound.Music;
@@ -17,6 +18,7 @@ public class Stage1 extends GalaxyStage {
         onAdd.addListener(x -> {
             BaseShip ship;
 
+
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < (10 - j); i++) {
                     ship = new Enemy01();
@@ -24,6 +26,8 @@ public class Stage1 extends GalaxyStage {
                     addObject(ship);
                 }
             }
+
+
         });
 
         onRemove.addListener(x -> {

@@ -16,7 +16,7 @@ public class Stage3 extends GalaxyStage {
         onAdd.addListener(x -> {
             BaseShip ship;
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < (10 - j); i++) {
                     ship = new Enemy03();
                     ship.setPosition((120 * i) + (70 * j) + 45, 100 + (j * 100));

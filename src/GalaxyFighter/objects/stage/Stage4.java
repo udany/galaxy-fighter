@@ -3,6 +3,7 @@ package GalaxyFighter.objects.stage;
 import GalaxyFighter.objects.menu.TitleScreen;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.Enemy03;
+import GalaxyFighter.objects.ship.Enemy.EnemyBoss;
 import GalaxyFighter.objects.ship.PlayerShip;
 import engine.graphics.Color;
 import engine.sound.Music;
@@ -25,13 +26,12 @@ public class Stage4 extends GalaxyStage {
         onAdd.addListener(x -> {
             BaseShip ship;
 
-            for (int j = 0; j < 2; j++) {
-                for (int i = 0; i < (1 - j); i++) {
-                    ship = new Enemy03();
-                    ship.setPosition((120 * i) + (70 * j) + 45, 100 + (j * 100));
-                    addObject(ship);
-                }
-            }
+
+            ship = new EnemyBoss();
+            ship.setPosition(545,  87);
+            addObject(ship);
+
+
         });
 
         onRemove.addListener(x -> {
