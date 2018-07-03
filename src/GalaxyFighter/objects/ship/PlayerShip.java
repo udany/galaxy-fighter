@@ -5,7 +5,7 @@ import GalaxyFighter.objects.util.HP;
 import engine.base.Vector;
 import engine.graphics.Color;
 import engine.graphics.Sprite;
-import engine.input.Keyboard;
+import engine.input.GenericInput;
 import engine.sound.SoundEffect;
 import engine.util.Event;
 
@@ -27,39 +27,6 @@ abstract public class PlayerShip extends BaseShip {
         checkForCollisions = true;
 
         /// KeyEvents
-        Keyboard kb = Keyboard.getInstance();
-        kb.onKeyDown.addListener(code -> {
-            switch (code) {
-                case KeyEvent.VK_LEFT:
-                case KeyEvent.VK_RIGHT:
-                case KeyEvent.VK_UP:
-                case KeyEvent.VK_DOWN:
-                    movementKeyDown(code);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    shouldFire = true;
-                    timeSinceLastShot = -1;
-                    break;
-            }
-        });
-        kb.onKeyUp.addListener(code -> {
-            switch (code) {
-                case KeyEvent.VK_LEFT:
-                case KeyEvent.VK_RIGHT:
-                case KeyEvent.VK_UP:
-                case KeyEvent.VK_DOWN:
-                    movementKeyUp(code);
-                    break;
-                case KeyEvent.VK_SPACE:
-                    shouldFire = false;
-                    timeSinceLastShot = -1;
-                    break;
-                case KeyEvent.VK_ENTER:
-                    currentSprite.setState(currentSprite.getState() + 1);
-                    break;
-            }
-        });
-
 
         onCollision.addListener(obj -> {
             if (obj instanceof EnemyBullet) {
@@ -69,7 +36,57 @@ abstract public class PlayerShip extends BaseShip {
 
         onAdd.addListener(stage -> {
             setupHp();
+            bindKeys();
         });
+        onRemove.addListener(stage -> {
+            unbindKeys();
+        });
+    }
+
+    private void bindKeys() {
+        currentStage.onButtonDown.addListener(code -> {
+            switch (code) {
+                case GenericInput.Button.Up:
+                    movementKeyDown(KeyEvent.VK_UP);
+                    break;
+                case GenericInput.Button.Down:
+                    movementKeyDown(KeyEvent.VK_DOWN);
+                    break;
+                case GenericInput.Button.Left:
+                    movementKeyDown(KeyEvent.VK_LEFT);
+                    break;
+                case GenericInput.Button.Right:
+                    movementKeyDown(KeyEvent.VK_RIGHT);
+                    break;
+                case GenericInput.Button.A:
+                    shootStart();
+                    break;
+            }
+        }, id.toString());
+
+        currentStage.onButtonUp.addListener(code -> {
+            switch (code) {
+                case GenericInput.Button.Up:
+                    movementKeyUp(KeyEvent.VK_UP);
+                    break;
+                case GenericInput.Button.Down:
+                    movementKeyUp(KeyEvent.VK_DOWN);
+                    break;
+                case GenericInput.Button.Left:
+                    movementKeyUp(KeyEvent.VK_LEFT);
+                    break;
+                case GenericInput.Button.Right:
+                    movementKeyUp(KeyEvent.VK_RIGHT);
+                    break;
+                case GenericInput.Button.A:
+                    shootStop();
+                    break;
+            }
+        }, id.toString());
+    }
+    private void unbindKeys() {
+        currentStage.onButtonDown.removeListener(id.toString());
+        currentStage.onButtonUp.removeListener(id.toString());
     }
 
     private void setupHp() {
@@ -92,6 +109,15 @@ abstract public class PlayerShip extends BaseShip {
         if (idx >= 0) {
             keys.remove(idx);
         }
+    }
+
+    protected void shootStart() {
+        shouldFire = true;
+        timeSinceLastShot = -1;
+    }
+    protected void shootStop() {
+        shouldFire = false;
+        timeSinceLastShot = -1;
     }
 
     public Event onDeath = new Event();

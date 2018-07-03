@@ -1,8 +1,8 @@
 package engine.main;
 
-import GalaxyFighter.objects.menu.TitleScreen;
 import engine.base.Size;
 import engine.graphics.Color;
+import engine.input.GenericInput;
 import engine.input.Keyboard;
 import engine.util.Event;
 import engine.window.Game;
@@ -38,42 +38,40 @@ public class Stage {
 
         tree = new QuadTree(size.width, size.height);
 
-        bindToKeyboard();
+        bindToController(game.getInput());
         unpause();
     });
 
     public Event<Game> onRemove = new Event<Game>().addListener(g -> {
+        unbindToController(game.getInput());
+
         game = null;
-        unbindToKeyboard();
+
         pause();
     });
 
-    public Event<Integer> onKeyDown = new Event<>();
-    public Event<Integer> onKeyUp = new Event<>();
+    public Event<Integer> onButtonDown = new Event<>();
+    public Event<Integer> onButtonUp = new Event<>();
 
-    protected void bindToKeyboard() {
-        Keyboard kb = Keyboard.getInstance();
-
-        kb.onKeyDown.addListener(key -> {
+    protected void bindToController(GenericInput input) {
+        input.onButtonDown.addListener(key -> {
             if (transitioning) return;
-            onKeyDown.emit(key);
+            onButtonDown.emit(key);
 
-            if (key == KeyEvent.VK_F11) {
+            if (key == GenericInput.Button.Select) {
                 if (paused) { unpause(); } else { pause(); }
             }
         }, id.toString());
 
-        kb.onKeyUp.addListener(key -> {
+        input.onButtonUp.addListener(key -> {
             if (transitioning) return;
-            onKeyUp.emit(key);
+            onButtonUp.emit(key);
         }, id.toString());
     }
 
-    protected void unbindToKeyboard() {
-        Keyboard kb = Keyboard.getInstance();
-
-        kb.onKeyDown.removeListener(id.toString());
-        kb.onKeyUp.removeListener(id.toString());
+    protected void unbindToController(GenericInput input) {
+        input.onButtonDown.removeListener(id.toString());
+        input.onButtonUp.removeListener(id.toString());
     }
 
     private QuadTree tree;

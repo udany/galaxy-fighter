@@ -100,6 +100,12 @@ public class Controller {
         public static final String X = "x";
         public static final String Y = "y";
 
+        public static final String L = "l";
+        public static final String R = "r";
+
+        public static final String Start = "start";
+        public static final String Select = "back";
+
         public static final String Up = "up";
         public static final String Down = "down";
         public static final String Left = "left";

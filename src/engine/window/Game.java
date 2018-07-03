@@ -1,7 +1,9 @@
 package engine.window;
 
+import GalaxyFighter.objects.input.GalaxyInput;
 import engine.base.Size;
 import engine.input.Controller;
+import engine.input.GenericInput;
 import engine.input.Keyboard;
 import engine.main.GameObject;
 import engine.main.Stage;
@@ -84,6 +86,8 @@ public abstract class Game extends MyFrame {
 
         Controller.setup();
     }
+
+    abstract public GenericInput getInput();
 
     long gameTime;
     public long getGameTime() { return gameTime; }
