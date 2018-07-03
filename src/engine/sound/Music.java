@@ -43,6 +43,10 @@ public class Music {
         loop = true;
         return this;
     }
+    public Music next(Music m) {
+        next = m;
+        return this;
+    }
 
     public void start(){
         if (mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
@@ -59,7 +63,8 @@ public class Music {
         return mediaPlayer.getVolume();
     }
 
-    public void setVolume(double volume) {
+    public Music setVolume(double volume) {
         mediaPlayer.setVolume(volume);
+        return this;
     }
 }
