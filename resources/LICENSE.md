@@ -3,7 +3,8 @@
 - Background based on art by [DanielHyaku](http://pixeljoint.com/pixelart/79670.htm)
 
 #### Music
-- Sawsquarenoise from their OST for OverHeated Alfa 0.2, hosted on [freemusicarchive.org](http://freemusicarchive.org/music/sawsquarenoise/OverHeated_Alfa_02/)
+- OST for OverHeated Alfa 0.2 by Sawsquarenoise, hosted on [freemusicarchive.org](http://freemusicarchive.org/music/sawsquarenoise/OverHeated_Alfa_02/)
+- Boss Music by SketchyLogic, hosted on [opengameart.org](https://opengameart.org/content/nes-shooter-music-5-tracks-3-jingles)
 
 #### Sound effects
 - The Chayed, hosted on [opengameart.org](https://opengameart.org/users/the-chayed)
