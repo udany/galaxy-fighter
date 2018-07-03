@@ -50,6 +50,12 @@ public class Controller {
             new Button<Boolean>(Button.X),
             new Button<Boolean>(Button.Y),
 
+            new Button<Boolean>(Button.R),
+            new Button<Boolean>(Button.L),
+
+            new Button<Boolean>(Button.Start),
+            new Button<Boolean>(Button.Select),
+
             new Button<Boolean>(Button.DPadUp, new String[]{Button.DPadUp, Button.Up}),
             new Button<Boolean>(Button.DPadDown, new String[]{Button.DPadDown, Button.Down}),
             new Button<Boolean>(Button.DPadLeft, new String[]{Button.DPadLeft, Button.Left}),
@@ -100,8 +106,8 @@ public class Controller {
         public static final String X = "x";
         public static final String Y = "y";
 
-        public static final String L = "l";
-        public static final String R = "r";
+        public static final String L = "lb";
+        public static final String R = "rb";
 
         public static final String Start = "start";
         public static final String Select = "back";
