@@ -55,7 +55,7 @@ public class Stage {
 
     protected void bindToController(GenericInput input) {
         input.onButtonDown.addListener(key -> {
-            if (transitioning) return;
+            // if (transitioning) return;
             onButtonDown.emit(key);
 
             if (key == GenericInput.Button.Select) {
@@ -64,7 +64,7 @@ public class Stage {
         }, id.toString());
 
         input.onButtonUp.addListener(key -> {
-            if (transitioning) return;
+            // if (transitioning) return;
             onButtonUp.emit(key);
         }, id.toString());
     }
@@ -169,6 +169,7 @@ public class Stage {
 
     protected boolean transitioning = false;
     public void transitionTo(Stage to) {
+        pause();
         FadeOut fadeOut = new FadeOut(new engine.graphics.Color(0,0,0), .5, game);
         FadeIn fadeIn = new FadeIn(new Color(0,0,0), .5, game);
         fadeOut.chain(fadeIn);
