@@ -8,6 +8,7 @@ import engine.graphics.Sprite;
 import engine.sound.SoundEffectPool;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Random;
 
 public class BaseEnemyShip extends BaseShip {
@@ -95,6 +96,7 @@ public class BaseEnemyShip extends BaseShip {
 
         super.update(secondsElapsed);
         timetoSinceLastShoot += secondsElapsed;
+
         if (timetoSinceLastShoot >= timetoNextShoot) {
             shoot();
             timetoSinceLastShoot = 0;
@@ -129,5 +131,41 @@ public class BaseEnemyShip extends BaseShip {
         }
 
         super.draw(graphics);
+    }
+
+    private List<EnemyMotion> motions;
+    private EnemyMotion currentMotion;
+    private double timeSinceMotionChange = 0;
+
+    protected void updateMotion(double secondsElapsed){
+
+        if(currentMotion == null) {
+
+            currentMotion = motions.get(0);
+
+        } else {
+
+            timeSinceMotionChange += secondsElapsed;
+
+            if( timeSinceMotionChange >= currentMotion.duration){
+
+                int index = motions.indexOf(currentMotion);
+
+                if(index < motions.size() - 1){
+
+                    currentMotion = motions.get(index + 1);
+
+                } else {
+
+                    currentMotion = motions.get(0);
+                }
+
+                timeSinceMotionChange = 0;
+
+            }
+        }
+
+
+
     }
 }
