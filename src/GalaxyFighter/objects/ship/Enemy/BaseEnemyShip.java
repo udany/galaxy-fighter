@@ -4,10 +4,12 @@ import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.bullets.PlayerBullet;
 import GalaxyFighter.objects.util.HP;
 import GalaxyFighter.objects.ship.BaseShip;
+import engine.base.Vector;
 import engine.graphics.Sprite;
 import engine.sound.SoundEffectPool;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -24,11 +26,6 @@ public class BaseEnemyShip extends BaseShip {
     public BaseEnemyShip() {
 
         weapon = new EnemySingleWeapon();
-
-        baseAcceleration = 2000;
-        maxSpeed = 200;
-        brakeRatio = 1.6;
-
 
         size.set(38, 28);
 
@@ -48,6 +45,10 @@ public class BaseEnemyShip extends BaseShip {
         onAdd.addListener(stage -> {
             hp = new HP(10, currentStage.getGame());
         });
+
+        motions = Arrays.asList(
+                new EnemyMotion(new Vector(0, 0), 2)
+        );
     }
 
     protected long timeLastHit = 0;
@@ -106,6 +107,7 @@ public class BaseEnemyShip extends BaseShip {
 
         timeAlive += secondsElapsed;
 
+        updateMotion(secondsElapsed);
     }
 
     protected double timeAlive = 0;
