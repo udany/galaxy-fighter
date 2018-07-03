@@ -30,6 +30,6 @@ public class Stage3 extends GalaxyStage {
     }
 
     public void nextStage() {
-        returnToTitle();
+        transitionTo(new Stage4(player));
     }
 }
