@@ -2,6 +2,7 @@ package GalaxyFighter.objects.stage;
 
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.Enemy01;
+import GalaxyFighter.objects.ship.Enemy.Enemy03;
 import GalaxyFighter.objects.ship.PlayerShip;
 
 import engine.sound.Music;

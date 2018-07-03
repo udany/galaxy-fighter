@@ -20,10 +20,12 @@ public class Enemy03 extends BaseEnemyShip {
         timeMaxShoot = 3;
 
         motions = Arrays.asList(
-                new EnemyMotion(new Vector(200, 0), 0.25),
-                new EnemyMotion(new Vector(-100, 200), 0.5),
-                new EnemyMotion(new Vector(-100, -200), 0.5),
-                new EnemyMotion(new Vector(200, 0), 0.25)
+                new EnemyMotion(new Vector(200, 0), 0.45),
+                new EnemyMotion(new Vector(-200, 70), 0.45),
+                new EnemyMotion(new Vector(200, 70), 0.45),
+                new EnemyMotion(new Vector(-200, 0), 0.45),
+                new EnemyMotion(new Vector(200, -70), 0.45),
+                new EnemyMotion(new Vector(-200, -70), 0.45)
         );
     }
 
