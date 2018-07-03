@@ -47,7 +47,9 @@ public class BaseEnemyShip extends BaseShip {
         });
 
         motions = Arrays.asList(
-                new EnemyMotion(new Vector(0, 0), 2)
+                new EnemyMotion(new Vector(100, 0), 1),
+                new EnemyMotion(new Vector(-100, 0), 2),
+                new EnemyMotion(new Vector(100, 0), 1)
         );
     }
 
@@ -167,7 +169,7 @@ public class BaseEnemyShip extends BaseShip {
             }
         }
 
-
+        speed.set(currentMotion.speed.x, currentMotion.speed.y);
 
     }
 }
