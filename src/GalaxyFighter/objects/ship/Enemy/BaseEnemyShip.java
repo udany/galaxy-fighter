@@ -15,6 +15,7 @@ import java.util.Random;
 
 public class BaseEnemyShip extends BaseShip {
 
+
     protected boolean immune = false;
 
 
@@ -43,7 +44,9 @@ public class BaseEnemyShip extends BaseShip {
 
 
         onAdd.addListener(stage -> {
-            hp = new HP(10, currentStage.getGame());
+
+           setHp();
+
         });
 
         motions = Arrays.asList(
@@ -56,6 +59,11 @@ public class BaseEnemyShip extends BaseShip {
     protected long timeLastHit = 0;
     protected int drawHpInterval = 1000;
 
+    protected void setHp(){
+
+        hp = new HP(5, currentStage.getGame());
+
+    }
     public void hit(PlayerBullet bullet) {
         if (bullet.isExploding()) return;
         if (immune) return;
@@ -137,7 +145,7 @@ public class BaseEnemyShip extends BaseShip {
         super.draw(graphics);
     }
 
-    private List<EnemyMotion> motions;
+    protected List<EnemyMotion> motions;
     private EnemyMotion currentMotion;
     private double timeSinceMotionChange = 0;
 

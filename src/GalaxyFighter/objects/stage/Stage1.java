@@ -4,6 +4,8 @@ import GalaxyFighter.objects.menu.TitleScreen;
 import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
+import GalaxyFighter.objects.ship.Enemy.Boss01;
+import GalaxyFighter.objects.ship.Enemy.Enemy02;
 import GalaxyFighter.objects.ship.PlayerShip;
 
 import engine.main.Stage;

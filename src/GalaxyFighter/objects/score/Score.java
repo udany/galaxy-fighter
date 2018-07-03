@@ -39,4 +39,9 @@ public class Score {
         graphics.drawString("Score: "+getValue(),1100,700  );
 
     }
+
+    public void reset(){
+
+        value = 0;
+    }
 }

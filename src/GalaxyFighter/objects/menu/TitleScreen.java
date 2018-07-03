@@ -1,5 +1,6 @@
 package GalaxyFighter.objects.menu;
 
+import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.Bombardier;
 import GalaxyFighter.objects.ship.EdgeLiner;
 import GalaxyFighter.objects.ship.PlayerShip;
@@ -21,9 +22,11 @@ public class TitleScreen extends Stage {
         Menu menu = new Menu(Arrays.asList(
                 new MenuOption("Choose Your Ship:"),
                 new MenuOption("Edgeliner", ()->{
+                    Score.getInstance().reset();
                     gameStart(new EdgeLiner());
                 }),
                 new MenuOption("Bombardier", ()->{
+                    Score.getInstance().reset();
                     gameStart(new Bombardier());
                 })
         )).setFont("/fonts/pixelmix.ttf", 35);

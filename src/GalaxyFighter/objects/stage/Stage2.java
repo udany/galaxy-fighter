@@ -4,6 +4,7 @@ import GalaxyFighter.objects.menu.TitleScreen;
 import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
+import GalaxyFighter.objects.ship.Enemy.Enemy02;
 import GalaxyFighter.objects.ship.PlayerShip;
 import engine.main.Stage;
 import engine.sound.Music;
@@ -34,7 +35,7 @@ public class Stage2 extends Stage {
 
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < (10 - j); i++) {
-                ship = new BaseEnemyShip();
+                ship = new Enemy02();
                 ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
                 addObject(ship);
             }
