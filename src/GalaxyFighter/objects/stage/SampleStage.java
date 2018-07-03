@@ -1,15 +1,15 @@
 package GalaxyFighter.objects.stage;
 
 import GalaxyFighter.objects.menu.TitleScreen;
+import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import GalaxyFighter.objects.ship.PlayerShip;
 
-import engine.graphics.Color;
 import engine.main.Stage;
 import engine.sound.Music;
-import engine.window.Transition.FadeIn;
-import engine.window.Transition.FadeOut;
+
+import java.awt.*;
 
 public class SampleStage extends Stage {
     static Music bgm = new Music("/sound/music/03_Field_force.mp3");
@@ -55,4 +55,12 @@ public class SampleStage extends Stage {
             returnToTitle();
         }
     }
+
+    @Override
+    public void draw(Graphics2D graphics) {
+
+        super.draw(graphics);
+        Score.getInstance().draw(graphics);
+    }
+
 }
