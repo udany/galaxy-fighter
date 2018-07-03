@@ -21,7 +21,7 @@ public class Stage3 extends GalaxyStage {
                     ship = new Enemy03();
                     ship.setPosition((120 * i) + (70 * j) + 45, 100 + (j * 100));
                     addObject(ship);
-                }
+                   }
             }
         });
 

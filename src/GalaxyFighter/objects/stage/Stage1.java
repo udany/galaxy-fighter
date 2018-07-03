@@ -18,7 +18,6 @@ public class Stage1 extends GalaxyStage {
         onAdd.addListener(x -> {
             BaseShip ship;
 
-
             for (int j = 0; j < 3; j++) {
                 for (int i = 0; i < (10 - j); i++) {
                     ship = new Enemy01();
@@ -26,7 +25,6 @@ public class Stage1 extends GalaxyStage {
                     addObject(ship);
                 }
             }
-
 
         });
 

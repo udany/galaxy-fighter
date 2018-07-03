@@ -60,6 +60,6 @@ public class EnemyBoss extends BaseEnemyShip {
     @Override
     protected void setHp() {
         hp = new HP(500, currentStage.getGame());
-        hp.size = new Size(100,20);
+        hp.size = new Size(100,8);
     }
 }
