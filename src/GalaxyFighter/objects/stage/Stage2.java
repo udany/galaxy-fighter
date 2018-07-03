@@ -5,16 +5,18 @@ import GalaxyFighter.objects.score.Score;
 import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import GalaxyFighter.objects.ship.PlayerShip;
-
 import engine.main.Stage;
 import engine.sound.Music;
 
 import java.awt.*;
 
-public class SampleStage extends Stage {
-    static Music bgm = new Music("/sound/music/03_Field_force.mp3");
+public class Stage2 extends Stage {
+    static Music bgm = new Music("/sound/music/02_Fire_darer.mp3");
 
-    public SampleStage(PlayerShip player) {
+    PlayerShip player;
+
+    public Stage2(PlayerShip p) {
+        player = p;
         player.setPosition(680, 720-48);
         addObject(player);
 
@@ -30,7 +32,7 @@ public class SampleStage extends Stage {
 
         BaseShip ship;
 
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 4; j++) {
             for (int i = 0; i < (10 - j); i++) {
                 ship = new BaseEnemyShip();
                 ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
