@@ -22,11 +22,9 @@ public class TitleScreen extends Stage {
         Menu menu = new Menu(Arrays.asList(
                 new MenuOption("Choose Your Ship:"),
                 new MenuOption("Edgeliner", ()->{
-                    Score.getInstance().reset();
                     gameStart(new EdgeLiner());
                 }),
                 new MenuOption("Bombardier", ()->{
-                    Score.getInstance().reset();
                     gameStart(new Bombardier());
                 })
         )).setFont("/fonts/pixelmix.ttf", 35);
@@ -53,6 +51,9 @@ public class TitleScreen extends Stage {
     Vector titlePosition = new Vector(360, 100);
 
     protected void gameStart(PlayerShip player) {
+        if (transitioning) return;
+
+        Score.getInstance().reset();
         transitionTo(new Stage1(player));
     }
 
