@@ -6,64 +6,34 @@ import GalaxyFighter.objects.ship.BaseShip;
 import GalaxyFighter.objects.ship.Enemy.BaseEnemyShip;
 import GalaxyFighter.objects.ship.Enemy.Enemy02;
 import GalaxyFighter.objects.ship.PlayerShip;
-import engine.main.Stage;
 import engine.sound.Music;
 
 import java.awt.*;
 
-public class Stage2 extends Stage {
-    static Music bgm = new Music("/sound/music/02_Fire_darer.mp3");
-
-    PlayerShip player;
-
+public class Stage2 extends GalaxyStage {
     public Stage2(PlayerShip p) {
-        player = p;
-        player.setPosition(680, 720-48);
-        addObject(player);
+        super(p);
 
+        bgm = new Music("/sound/music/02_Fire_darer.mp3");
         bgm.setVolume(.15);
 
         onAdd.addListener(x -> {
-            bgm.start();
+            BaseShip ship;
+
+            for (int j = 0; j < 4; j++) {
+                for (int i = 0; i < (10 - j); i++) {
+                    ship = new Enemy02();
+                    ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
+                    addObject(ship);
+                }
+            }
         });
 
         onRemove.addListener(x -> {
-            bgm.stop();
-        });
-
-        BaseShip ship;
-
-        for (int j = 0; j < 4; j++) {
-            for (int i = 0; i < (10 - j); i++) {
-                ship = new Enemy02();
-                ship.setPosition((128 * i) +45*(j+1), (j * 72) + 15);
-                addObject(ship);
-            }
-        }
-
-        player.onDeath.addListener(x -> {
-            returnToTitle();
         });
     }
 
-    public void returnToTitle() {
-        transitionTo(new TitleScreen());
+    public void nextStage() {
+        returnToTitle();
     }
-
-    @Override
-    public void update(long elapsedMs) {
-        super.update(elapsedMs);
-
-        if (!transitioning && getObjectList(x -> x instanceof BaseEnemyShip).size() == 0) {
-            returnToTitle();
-        }
-    }
-
-    @Override
-    public void draw(Graphics2D graphics) {
-
-        super.draw(graphics);
-        Score.getInstance().draw(graphics);
-    }
-
 }
