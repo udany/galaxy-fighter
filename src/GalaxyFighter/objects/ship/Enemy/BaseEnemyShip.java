@@ -14,10 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BaseEnemyShip extends BaseShip {
-
-
     protected boolean immune = false;
-
 
     static SoundEffectPool damageSound = new SoundEffectPool("/sound/sfx/Damage_01.wav").setVolume(.1);
     static SoundEffectPool explosionSound = new SoundEffectPool("/sound/sfx/Explosion_01.wav").setVolume(.5);
@@ -25,7 +22,6 @@ public class BaseEnemyShip extends BaseShip {
     Sprite explosion = new Sprite(32, 32, "/images/Explosion.png").setFramesPerFrame(5).setOrigin(-4, 0);
 
     public BaseEnemyShip() {
-
         weapon = new EnemySingleWeapon();
 
         size.set(38, 28);
@@ -44,15 +40,11 @@ public class BaseEnemyShip extends BaseShip {
 
 
         onAdd.addListener(stage -> {
-
            setHp();
-
         });
 
         motions = Arrays.asList(
-                new EnemyMotion(new Vector(100, 0), 1),
-                new EnemyMotion(new Vector(-100, 0), 2),
-                new EnemyMotion(new Vector(100, 0), 1)
+                new EnemyMotion(new Vector(0, 0), 1)
         );
     }
 
@@ -60,10 +52,9 @@ public class BaseEnemyShip extends BaseShip {
     protected int drawHpInterval = 1000;
 
     protected void setHp(){
-
         hp = new HP(5, currentStage.getGame());
-
     }
+
     public void hit(PlayerBullet bullet) {
         if (bullet.isExploding()) return;
         if (immune) return;
@@ -87,8 +78,6 @@ public class BaseEnemyShip extends BaseShip {
 
             immune = true;
         }
-
-
     }
 
     protected double timetoSinceLastShoot = 0;
