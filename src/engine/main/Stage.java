@@ -43,11 +43,13 @@ public class Stage {
     });
 
     public Event<Game> onRemove = new Event<Game>().addListener(g -> {
+        pause();
+
+        if (game == null) return;
+
         unbindToController(game.getInput());
 
         game = null;
-
-        pause();
     });
 
     public Event<Integer> onButtonDown = new Event<>();
@@ -99,6 +101,8 @@ public class Stage {
                 graphics.setTransform(baseTransform);
             }
         }
+
+        this.tree.draw(graphics);
 
         onPaint.emit(graphics);
     }

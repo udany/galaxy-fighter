@@ -33,7 +33,7 @@ public class BaseBullet extends MotionObject {
 
         position.y = Math.round(position.y);
 
-        if (this.position.y < -this.size.height) {
+        if (this.position.y > this.currentStage.size.height) {
             this.destroy();
         }
     }

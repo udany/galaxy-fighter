@@ -19,6 +19,15 @@ public class PlayerBullet extends BaseBullet {
         explodeSprite.setFramesPerFrame(6);
     }
 
+    @Override
+    public void update(double secondsElapsed) {
+        super.update(secondsElapsed);
+
+        if (this.position.y < -this.size.height) {
+            this.destroy();
+        }
+    }
+
     public void setType(int type) {
         currentSprite.setState(type);
     }

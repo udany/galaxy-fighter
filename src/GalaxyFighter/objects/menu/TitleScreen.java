@@ -21,12 +21,8 @@ public class TitleScreen extends Stage {
     public TitleScreen() {
         Menu menu = new Menu(Arrays.asList(
                 new MenuOption("Choose Your Ship:"),
-                new MenuOption("Edgeliner", ()->{
-                    gameStart(new EdgeLiner());
-                }),
-                new MenuOption("Bombardier", ()->{
-                    gameStart(new Bombardier());
-                })
+                new MenuOption("Edgeliner", ()-> gameStart(new EdgeLiner())),
+                new MenuOption("Bombardier", ()-> gameStart(new Bombardier()))
         )).setFont("/fonts/pixelmix.ttf", 35);
 
         addObject(menu);
